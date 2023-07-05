@@ -1,114 +1,120 @@
+import Image from "next/image";
 import React from "react";
+import logo from "../../assets/logo.jpg";
 
-const page = () => {
+const login = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-screen h-screen bg-gradient-to-r from-[#1d5cbe] to-[#c84390]">
-      <div className="mb-4">
-        <h1 className="text-white font-normal text-3xl">Login</h1>
-      </div>
-      <div className="mb-2 relative w-1/3">
-        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-          <svg
-            viewBox="0 0 20 20"
-            className="h-5 w-5 text-gray-500 dark:text-gray-400"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-          >
-            <title>profile [#1335]</title>
-            <desc>Created with Sketch.</desc>
-            <defs></defs>
-            <g
-              id="Page-1"
-              stroke="none"
-              stroke-width="1"
-              fill="none"
-              fill-rule="evenodd"
-            >
-              <g
-                id="Dribbble-Light-Preview"
-                transform="translate(-420.000000, -2159.000000)"
-                fill="#000000"
-              >
-                <g id="icons" transform="translate(56.000000, 160.000000)">
-                  <path
-                    d="M374,2009 C371.794,2009 370,2007.206 370,2005 C370,2002.794 371.794,2001 374,2001 C376.206,2001 378,2002.794 378,2005 C378,2007.206 376.206,2009 374,2009 M377.758,2009.673 C379.124,2008.574 380,2006.89 380,2005 C380,2001.686 377.314,1999 374,1999 C370.686,1999 368,2001.686 368,2005 C368,2006.89 368.876,2008.574 370.242,2009.673 C366.583,2011.048 364,2014.445 364,2019 L366,2019 C366,2014 369.589,2011 374,2011 C378.411,2011 382,2014 382,2019 L384,2019 C384,2014.445 381.417,2011.048 377.758,2009.673"
-                    id="profile-[#1335]"
-                  ></path>
-                </g>
-              </g>
-            </g>
-          </svg>
-        </div>
-        <input
-          type="text"
-          id="simple-search"
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 md:p-2.5 pl-10 md:pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-          placeholder="email"
-        />
-      </div>
-      <div className="mb-2 relative w-1/3">
-        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-          <svg
-            className="h-5 w-5 text-gray-500 dark:text-gray-400"
-            viewBox="0 0 48 48"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g id="Layer_2" data-name="Layer 2">
-              <g id="invisible_box" data-name="invisible box">
-                <rect width="48" height="48" fill="none" />
-              </g>
-              <g id="Layer_7" data-name="Layer 7">
-                <g>
-                  <path d="M39,18H35V13A11,11,0,0,0,24,2H22A11,11,0,0,0,11,13v5H7a2,2,0,0,0-2,2V44a2,2,0,0,0,2,2H39a2,2,0,0,0,2-2V20A2,2,0,0,0,39,18ZM15,13a7,7,0,0,1,7-7h2a7,7,0,0,1,7,7v5H15ZM37,42H9V22H37Z" />
-                  <circle cx="15" cy="32" r="3" />
-                  <circle cx="23" cy="32" r="3" />
-                  <circle cx="31" cy="32" r="3" />
-                </g>
-              </g>
-            </g>
-          </svg>
-        </div>
-        <input
-          type="text"
-          id="simple-search"
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 md:p-2.5 pl-10 md:pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-          placeholder="password"
-        />
-      </div>
+    <section className=" h-screen gradient-form bg-neutral-200 dark:bg-neutral-700">
+      <div className="container h-full p-10">
+        <div className="g-6 flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200">
+          <div className="w-full">
+            <div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
+              <div className="g-0 lg:flex lg:flex-wrap">
+                <div className="px-4 md:px-0 lg:w-6/12">
+                  <div className="md:mx-6 md:p-12">
+                    <div className="text-center">
+                      <Image
+                        className="mx-auto w-48 rounded-md"
+                        src={logo}
+                        alt="logo"
+                        width={100}
+                        height={100}
+                      />
+                      <h4 className="mb-12 mt-1 pb-1 text-xl font-semibold">
+                        We are The FC POS
+                      </h4>
+                    </div>
 
-      <div className="flex w-1/4 items-center justify-between mb-4">
-        <div className="flex items-center">
-          <input
-            id="remember-me"
-            name="remember-me"
-            type="checkbox"
-            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-          />
-          <label
-            htmlFor="remember-me"
-            className="ml-2 block text-sm font-light text-white"
-          >
-            Remember me
-          </label>
-        </div>
+                    <form>
+                      <p className="mb-4">Please login to your account</p>
 
-        <div className="text-sm">
-          <a href="#" className="font-medium text-white hover:text-gray-200">
-            Forgot your password?
-          </a>
+                      <div className="relative mb-4" data-te-input-wrapper-init>
+                        <input
+                          type="text"
+                          className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                          id="exampleFormControlInput1"
+                          placeholder="Username"
+                        />
+                        <label
+                          htmlFor="exampleFormControlInput1"
+                          className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                        >
+                          Username
+                        </label>
+                      </div>
+
+                      <div className="relative mb-4" data-te-input-wrapper-init>
+                        <input
+                          type="password"
+                          className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                          id="exampleFormControlInput11"
+                          placeholder="Password"
+                        />
+                        <label
+                          htmlFor="exampleFormControlInput11"
+                          className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                        >
+                          Password
+                        </label>
+                      </div>
+
+                      <div className="mb-12 pb-1 pt-1 text-center">
+                        <button
+                          className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+                          type="button"
+                          data-te-ripple-init
+                          data-te-ripple-color="light"
+                          style={{
+                            background:
+                              "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
+                          }}
+                        >
+                          Log in
+                        </button>
+
+                        <a href="#!">Forgot password?</a>
+                      </div>
+
+                      <div className="flex items-center justify-between pb-6">
+                        <p className="mb-0 mr-2">Don&apos;t have an account?</p>
+                        <button
+                          type="button"
+                          className="inline-block rounded border-2 border-danger px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
+                          data-te-ripple-init
+                          data-te-ripple-color="light"
+                        >
+                          Register
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div
+                  className="flex items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none"
+                  style={{
+                    background:
+                      "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
+                  }}
+                >
+                  <div className="px-4 py-6 text-white md:mx-6 md:p-12">
+                    <h4 className="mb-6 text-xl font-semibold">
+                      We are more than just a company
+                    </h4>
+                    <p className="text-sm">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div>
-        <button
-          type="button"
-          className=" w-48 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-        >
-          Login
-        </button>
-      </div>
-    </div>
+    </section>
   );
 };
 
-export default page;
+export default login;
