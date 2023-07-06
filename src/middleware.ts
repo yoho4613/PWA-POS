@@ -21,11 +21,11 @@ export async function middleware(req: NextRequest) {
   const url = req.url;
 
   if (url.includes("/login") && verifiedToken) {
-    return NextResponse.rewrite(new URL("/dashboard", req.url));
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   if (!verifiedToken) {
-    return NextResponse.rewrite(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/login", req.url));
   }
 
   return
@@ -33,5 +33,5 @@ export async function middleware(req: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/dashboard", "/:path*", "/api/admin/:path*", "/login"],
+  matcher: ["/", "/dashboard"],
 };
