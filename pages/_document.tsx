@@ -11,7 +11,6 @@ export default function Document() {
       </Head>
       <body>
         <div className="flex">
-          <Navbar />
           <Main />
           <NextScript />
         </div>
