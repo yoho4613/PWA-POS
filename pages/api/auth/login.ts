@@ -1,11 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
-import { prisma } from "../../db";
-import { User } from "../../config/type";
+import { prisma } from "../../../db";
+import { User } from "../../../config/type";
 import { SignJWT } from "jose";
 import { nanoid } from "nanoid";
-import { getJwtSecretKey } from "../../lib/auth";
+import { getJwtSecretKey } from "../../../lib/auth";
 import bcrypt from "bcryptjs";
 import { serialize } from "cookie";
 
@@ -68,4 +68,6 @@ export default async function handler(
     res.redirect(307, "/");
     return { success: true };
   }
+
+  
 }

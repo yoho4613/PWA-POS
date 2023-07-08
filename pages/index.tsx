@@ -1,5 +1,5 @@
-import Head from 'next/head'
-import Navbar from '../components/Navbar'
+import Head from "next/head";
+import Navbar from "../components/Navbar";
 
 export default function Home() {
   return (
@@ -10,9 +10,14 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
-        <h1> FC POS</h1>
+      <div className="flex bg-[#002A53] w-screen h-screen ">
+        <div>
+          <Navbar />
+        </div>
+        <div>
+          <h1>FC POS</h1>
+        </div>
       </div>
     </>
-  )
+  );
 }

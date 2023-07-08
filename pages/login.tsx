@@ -24,7 +24,7 @@ const login = () => {
                       </h4>
                     </div>
 
-                    <form method="POST" action="/api/login">
+                    <form method="POST" action="/api/auth/login">
                       <p className="mb-4">Please login to your account</p>
 
                       <div

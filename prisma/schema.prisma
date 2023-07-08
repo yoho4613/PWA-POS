@@ -6,17 +6,66 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id      String @id @default(uuid())
-  name    String
-  email   String  @unique
-  password String
-  role   String
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("staff")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  lastLogin DateTime @default(now())
+}
+
+model Table {
+  id             String  @id @default(cuid())
+  name           String
+  location       String
+  capacity       Int
+  isParticipated Boolean
+}
+
+model Cashup {
+  id        String   @id @default(cuid())
+  cash      Int
+  card      Int
+  other     Int
+  startedAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model MenuItem {
+  id         String   @id @unique @default(cuid())
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  lastLogin DateTime @default(now())
+  name       String
+  price      Float
+  categories String
+  imageKey   String
+  active     Boolean  @default(true)
+  Order      Order?
+}
+
+model Transaction {
+  id           Int     @id @unique @default(autoincrement())
+  customerName String
+  people       Float
+  charge       Int
+  payment      Int
+  subtotal     Int
+  paid         Boolean
+  order        Order   @relation(fields: [orderId], references: [id])
+  orderId      String
+}
+
+model Order {
+  id       String   @id @unique @default(cuid())
+  item     MenuItem @relation(fields: [itemId], references: [id])
+  itemId   String   @unique
+  quantity Float
+  Transaction Transaction[]
 }
