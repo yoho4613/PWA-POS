@@ -1,7 +1,12 @@
 import Head from "next/head";
 import Navbar from "../components/Navbar";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { BASE_URL } from "./constant/config";
+import Table from "../components/Table/Table";
 
-export default function Home() {
+export default function Home({
+  tables,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Head>
@@ -14,10 +19,31 @@ export default function Home() {
         <div>
           <Navbar />
         </div>
-        <div>
-          <h1>FC POS</h1>
+        <div className="w-full flex flex-wrap justify-evenly items-center">
+          {tables && tables.map((table) => <Table table={table} />)}
         </div>
       </div>
     </>
   );
 }
+
+interface TableType {
+  id: string;
+  name: string;
+  capacity: number;
+  location: string;
+  isParticipated: false;
+}
+
+export const getServerSideProps: GetServerSideProps<{
+  tables: TableType[];
+}> = async () => {
+  const result = await fetch(`${BASE_URL}/api/table/table`);
+  const tables = await result.json();
+
+  return {
+    props: {
+      tables,
+    },
+  };
+};
