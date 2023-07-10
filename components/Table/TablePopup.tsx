@@ -1,12 +1,13 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { BASE_URL } from "../../pages/constant/config";
+import { TableType } from "../../config/type";
 
 interface TablePopupProps {
-  popupOpen: string | null;
+  selectedTable: TableType | null;
   setPopupOpen: Dispatch<SetStateAction<string | null>>;
 }
 
-const TablePopup = ({ popupOpen, setPopupOpen }: TablePopupProps) => {
+const TablePopup = ({ selectedTable, setPopupOpen }: TablePopupProps) => {
   const popupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const TablePopup = ({ popupOpen, setPopupOpen }: TablePopupProps) => {
   return (
     <div ref={popupRef}>
       <form method="POST" action={`${BASE_URL}/api/transaction/transaction`}>
-        <div className="text-center  font-bold text-lg">{popupOpen}</div>
+        <div className="text-center  font-bold text-lg">{selectedTable?.name}</div>
         <div className="mb-4">
           <label
             htmlFor="customer_name"

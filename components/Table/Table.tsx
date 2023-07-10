@@ -1,17 +1,19 @@
-import { Table } from "@prisma/client";
 import { useRouter } from "next/router";
 import React, { Dispatch, SetStateAction } from "react";
+import { TableType } from "../../config/type";
 
 interface TableProps {
-  table: Table;
+  table: TableType;
   setPopupOpen: Dispatch<SetStateAction<string | null>>;
+  setSelectedTable: Dispatch<SetStateAction<TableType | null>>;
 }
 
-const Table = ({ table, setPopupOpen }: TableProps) => {
+const Table = ({ table, setPopupOpen, setSelectedTable }: TableProps) => {
   const router = useRouter();
   const openTableDetail = () => {
     if (!table.isParticipated) {
       setPopupOpen(table.name);
+      setSelectedTable(table);
     } else {
       router.push(`/transaction/${table.id}`);
     }

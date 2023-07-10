@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../db";
 import { z } from "zod";
+import { BASE_URL } from "../../constant/config";
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,9 +10,16 @@ export default async function handler(
   const transactionSchema = z.object({
     customerName: z.string(),
     people: z.number(),
+    table: z.object({
+      id: z.string(),
+      name: z.string(),
+      capacity: z.number(),
+      location: z.string(),
+      isParticipated: z.boolean(),
+    }),
   });
   if (req.method === "POST") {
-    const { customerName, people } = req.body;
+    const { customerName, people, table } = req.body;
     const response = transactionSchema.safeParse({
       customerName,
       people: Number(people),
@@ -27,6 +35,14 @@ export default async function handler(
         people: Number(people),
       },
     });
+
+    const updatedTable = await fetch(`${BASE_URL}/api/table/isParticipated`, {
+      method: "POST",
+      body: JSON.stringify({
+        id: table.id,
+      }),
+    });
+
     res.redirect(307, `/transaction/${transaction.id}`);
     res.status(200).json(transaction);
   }
