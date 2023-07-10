@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const tables = await prisma.table.findMany();
+    const tables = await prisma.categories.findMany();
 
     res.status(200).json(tables);
   }

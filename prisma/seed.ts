@@ -153,6 +153,18 @@ async function main() {
     )
   );
 
+  const categories = ["Breakfast", "Lunch", "Dinner", "Drink"];
+
+  await Promise.all(
+    categories.map(async (category) => {
+      await prisma.categories.create({
+        data: {
+          name: category,
+        },
+      });
+    })
+  );
+
   await prisma.$disconnect();
 }
 

@@ -39,20 +39,20 @@ model Cashup {
 }
 
 model MenuItem {
-  id         String       @id @unique @default(cuid())
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
+  id         String   @id @unique @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   name       String
   price      Float
   categories String[]
   imageKey   String
-  active     Boolean      @default(true)
+  active     Boolean  @default(true)
   Order      Order?
 }
 
 model Categories {
-  id         String    @id @unique @default(cuid())
-  name       String
+  id   String @id @unique @default(cuid())
+  name String
 }
 
 model Transaction {

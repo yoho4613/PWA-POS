@@ -14,3 +14,8 @@ export interface TableType {
   location: string;
   isParticipated: false;
 }
+
+export interface Categories {
+  id: string;
+  name: string;
+}
