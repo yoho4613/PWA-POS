@@ -6,3 +6,11 @@ export interface User {
   createdAt:  DateTime
   updatedAt:  DateTime 
 }
+
+export interface TableType {
+  id: string;
+  name: string;
+  capacity: number;
+  location: string;
+  isParticipated: false;
+}

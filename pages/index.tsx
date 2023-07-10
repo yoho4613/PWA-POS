@@ -3,10 +3,15 @@ import Navbar from "../components/Navbar";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { BASE_URL } from "./constant/config";
 import Table from "../components/Table/Table";
+import { TableType } from "../config/type";
+import { useState } from "react";
+import TablePopup from "../components/Table/TablePopup";
 
 export default function Home({
   tables,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [popupOpen, setPopupOpen] = useState<boolean>(false);
+
   return (
     <>
       <Head>
@@ -19,20 +24,20 @@ export default function Home({
         <div>
           <Navbar />
         </div>
-        <div className="w-full flex flex-wrap justify-evenly items-center">
-          {tables && tables.map((table) => <Table table={table} />)}
+        <div className="relative w-full flex flex-wrap justify-evenly items-center">
+          {popupOpen && (
+            <div className="flex flex-col justify-center absolute top-1/2 left-1/2 w-1/2 h-1/3 -translate-x-1/2 -translate-y-1/2 bg-gray-300 p-10 rounded-lg">
+              <TablePopup setPopupOpen={setPopupOpen} />
+            </div>
+          )}
+          {tables &&
+            tables.map((table) => (
+              <Table key={table.id} table={table} setPopupOpen={setPopupOpen} />
+            ))}
         </div>
       </div>
     </>
   );
-}
-
-interface TableType {
-  id: string;
-  name: string;
-  capacity: number;
-  location: string;
-  isParticipated: false;
 }
 
 export const getServerSideProps: GetServerSideProps<{

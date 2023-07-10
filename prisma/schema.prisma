@@ -39,33 +39,37 @@ model Cashup {
 }
 
 model MenuItem {
-  id         String   @id @unique @default(cuid())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id         String       @id @unique @default(cuid())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
   name       String
   price      Float
-  categories String
+  categories String[]
   imageKey   String
-  active     Boolean  @default(true)
+  active     Boolean      @default(true)
   Order      Order?
+}
+
+model Categories {
+  id         String    @id @unique @default(cuid())
+  name       String
 }
 
 model Transaction {
   id           Int     @id @unique @default(autoincrement())
   customerName String
   people       Float
-  charge       Int
-  payment      Int
-  subtotal     Int
-  paid         Boolean
-  order        Order   @relation(fields: [orderId], references: [id])
-  orderId      String
+  payment      Int     @default(0)
+  subtotal     Int     @default(0)
+  paid         Boolean @default(false)
+  order        Order[]
 }
 
 model Order {
-  id       String   @id @unique @default(cuid())
-  item     MenuItem @relation(fields: [itemId], references: [id])
-  itemId   String   @unique
-  quantity Float
-  Transaction Transaction[]
+  id            String       @id @unique @default(cuid())
+  item          MenuItem     @relation(fields: [itemId], references: [id])
+  itemId        String       @unique
+  quantity      Float
+  Transaction   Transaction? @relation(fields: [transactionId], references: [id])
+  transactionId Int?
 }

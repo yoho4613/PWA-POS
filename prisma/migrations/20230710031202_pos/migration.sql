@@ -42,7 +42,7 @@ CREATE TABLE "MenuItem" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "name" TEXT NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
-    "categories" TEXT NOT NULL,
+    "categories" TEXT[],
     "imageKey" TEXT NOT NULL,
     "active" BOOLEAN NOT NULL DEFAULT true,
 
@@ -50,15 +50,21 @@ CREATE TABLE "MenuItem" (
 );
 
 -- CreateTable
+CREATE TABLE "Categories" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+
+    CONSTRAINT "Categories_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Transaction" (
     "id" SERIAL NOT NULL,
     "customerName" TEXT NOT NULL,
     "people" DOUBLE PRECISION NOT NULL,
-    "charge" INTEGER NOT NULL,
-    "payment" INTEGER NOT NULL,
-    "subtotal" INTEGER NOT NULL,
-    "paid" BOOLEAN NOT NULL,
-    "orderId" TEXT NOT NULL,
+    "payment" INTEGER NOT NULL DEFAULT 0,
+    "subtotal" INTEGER NOT NULL DEFAULT 0,
+    "paid" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Transaction_pkey" PRIMARY KEY ("id")
 );
@@ -68,6 +74,7 @@ CREATE TABLE "Order" (
     "id" TEXT NOT NULL,
     "itemId" TEXT NOT NULL,
     "quantity" DOUBLE PRECISION NOT NULL,
+    "transactionId" INTEGER,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
@@ -79,6 +86,9 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE UNIQUE INDEX "MenuItem_id_key" ON "MenuItem"("id");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Categories_id_key" ON "Categories"("id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Transaction_id_key" ON "Transaction"("id");
 
 -- CreateIndex
@@ -88,7 +98,7 @@ CREATE UNIQUE INDEX "Order_id_key" ON "Order"("id");
 CREATE UNIQUE INDEX "Order_itemId_key" ON "Order"("itemId");
 
 -- AddForeignKey
-ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "Order_itemId_fkey" FOREIGN KEY ("itemId") REFERENCES "MenuItem"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Order" ADD CONSTRAINT "Order_itemId_fkey" FOREIGN KEY ("itemId") REFERENCES "MenuItem"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "Order_transactionId_fkey" FOREIGN KEY ("transactionId") REFERENCES "Transaction"("id") ON DELETE SET NULL ON UPDATE CASCADE;
