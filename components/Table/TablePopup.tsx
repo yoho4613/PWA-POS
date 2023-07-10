@@ -1,24 +1,19 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { BASE_URL } from "../../pages/constant/config";
 
 interface TablePopupProps {
-  setPopupOpen: Dispatch<SetStateAction<boolean>>;
+  popupOpen: string | null;
+  setPopupOpen: Dispatch<SetStateAction<string | null>>;
 }
 
-const TablePopup = ({ setPopupOpen }: TablePopupProps) => {
+const TablePopup = ({ popupOpen, setPopupOpen }: TablePopupProps) => {
   const popupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (e.target instanceof HTMLElement) {
         if (popupRef.current && !popupRef.current.contains(e.target)) {
-          setPopupOpen(false);
+          setPopupOpen(null);
           document.removeEventListener("mousedown", handleClickOutside);
         }
       }
@@ -41,6 +36,7 @@ const TablePopup = ({ setPopupOpen }: TablePopupProps) => {
   return (
     <div ref={popupRef}>
       <form method="POST" action={`${BASE_URL}/api/transaction/transaction`}>
+        <div className="text-center  font-bold text-lg">{popupOpen}</div>
         <div className="mb-4">
           <label
             htmlFor="customer_name"

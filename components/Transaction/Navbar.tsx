@@ -9,8 +9,8 @@ interface NavbarProps {
 
 const Navbar = ({ categories, setSelectedCategory, selectedCategory }: NavbarProps) => {
   return (
-    <div className=" bg-gray-400 h-24 flex items-center px-4">
-      <ul className="grow hidden text-sm font-medium text-center text-gray-500 divide-gray-200 sm:flex dark:text-gray-400">
+    <div className=" h-24 flex items-center px-4">
+      <ul className="grow hidden text-base font-medium text-center text-gray-500 divide-gray-200 sm:flex dark:text-gray-400">
         {categories && categories.map((category) => (
           <li key={category.id} className="w-full mx-2">
             <button
