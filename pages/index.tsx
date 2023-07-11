@@ -12,7 +12,7 @@ export default function Home({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [popupOpen, setPopupOpen] = useState<string | null>(null);
   const [selectedTable, setSelectedTable] = useState<TableType | null>(null);
-
+  console.log(tables);
   return (
     <>
       <Head>
@@ -35,14 +35,16 @@ export default function Home({
             </div>
           )}
           {tables &&
-            tables.map((table) => (
-              <Table
-                key={table.id}
-                table={table}
-                setSelectedTable={setSelectedTable}
-                setPopupOpen={setPopupOpen}
-              />
-            ))}
+            tables
+              .sort()
+              .map((table) => (
+                <Table
+                  key={table.id}
+                  table={table}
+                  setSelectedTable={setSelectedTable}
+                  setPopupOpen={setPopupOpen}
+                />
+              ))}
         </div>
       </div>
     </>

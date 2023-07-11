@@ -15,7 +15,7 @@ export default async function handler(
       res.status(400).json("Invalid Type");
     }
 
-    const { id } = req.body;
+    const { id } = JSON.parse(req.body);
 
     const table = await prisma.table.findUnique({
       where: { id },

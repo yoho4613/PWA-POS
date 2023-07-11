@@ -38,6 +38,7 @@ const TablePopup = ({ selectedTable, setPopupOpen }: TablePopupProps) => {
     <div ref={popupRef}>
       <form method="POST" action={`${BASE_URL}/api/transaction/transaction`}>
         <div className="text-center  font-bold text-lg">{selectedTable?.name}</div>
+        <input className="hidden" name="tableId" type="text" defaultValue={selectedTable?.id} />
         <div className="mb-4">
           <label
             htmlFor="customer_name"
