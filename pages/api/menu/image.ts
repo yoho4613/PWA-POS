@@ -13,12 +13,14 @@ export default async function handler(
       fileType: z.string(),
     });
 
-    if (!fileTypeSchema.safeParse(req.body).success) {
+    if (!fileTypeSchema.safeParse(JSON.parse(req.body)).success) {
       res.status(400).json("Invalid Type");
     }
 
+    const { fileType } = JSON.parse(req.body);
+
     const id = nanoid();
-    const ex = req.body.fileType.split("/")[1] || "";
+    const ex = fileType.split("/")[1] || "";
     const key = `${id}.${ex}`;
 
     const { url, fields } = (await new Promise((resolve, reject) => {
@@ -40,7 +42,7 @@ export default async function handler(
       );
     })) as any as { url: string; fields: string[] };
 
-    return { url, fields, key };
+    res.status(200).json({ url, fields, key });
   }
 
   if (req.method === "DELETE") {
@@ -52,9 +54,7 @@ export default async function handler(
       res.status(400).json("Invalid Type");
     }
     const { imageKey } = req.body;
-    await s3
-      .deleteObject({ Bucket: "restaurant-booking-app", Key: imageKey })
-      .promise();
+    await s3.deleteObject({ Bucket: "pwa-pos", Key: imageKey }).promise();
     // Delete the image form db
 
     res.status(200).json({ success: true });

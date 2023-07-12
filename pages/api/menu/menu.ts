@@ -7,19 +7,32 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "POST") {
+  if (req.method === "GET") {
+    const menuItems = await prisma.menuItem.findMany();
+    // Each menu item only contains its AWS key. Extend all items with their actual img url
+    const withUrls = await Promise.all(
+      menuItems.map(async (menuItem) => ({
+        ...menuItem,
+        url: await s3.getSignedUrlPromise("getObject", {
+          Bucket: "pwa-pos",
+          Key: menuItem.imageKey,
+        }),
+      }))
+    );
+    res.status(200).json(withUrls);
+  } else if (req.method === "POST") {
     const menuSchema = z.object({
       name: z.string(),
-      price: z.string(),
+      price: z.number(),
       imageKey: z.string(),
       categories: z.array(z.string()),
     });
 
-    if (!menuSchema.safeParse(req.body).success) {
+    if (!menuSchema.safeParse(JSON.parse(req.body)).success) {
       res.status(400).json("Invalid Type");
     }
 
-    const { name, price, imageKey, categories } = req.body;
+    const { name, price, imageKey, categories } = JSON.parse(req.body);
     const menuItem = await prisma.menuItem.create({
       data: {
         name,
@@ -29,7 +42,7 @@ export default async function handler(
       },
     });
 
-    res.status(200).json({ menuItem });
+    res.status(200).json(menuItem);
   }
 
   if (req.method === "DELETED") {

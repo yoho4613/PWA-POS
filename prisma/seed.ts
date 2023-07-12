@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { MenuItem } from "../config/type";
 
 interface Table {
   id: string;
@@ -160,6 +161,73 @@ async function main() {
       await prisma.categories.create({
         data: {
           name: category,
+        },
+      });
+    })
+  );
+
+  const menus = [
+    {
+      id: "cljzfkb0f0002031na03wjyzx",
+      createdAt: "2023-07-12T07:59:28.192Z",
+      updatedAt: "2023-07-12T07:59:28.192Z",
+      name: "Big Breakfast",
+      price: 32,
+      categories: ["cljxp4rbs000003ocntutxfqy", "cljxp4rbs000103oc6nhfn8b8"],
+      imageKey: "oQBKMNUdH_wv-TSFW43Tt.jpeg",
+      active: true,
+    },
+    {
+      id: "cljzfm7q00003031nmwawl0ev",
+      createdAt: "2023-07-12T08:00:57.240Z",
+      updatedAt: "2023-07-12T08:00:57.240Z",
+      name: "Soft tofu soup",
+      price: 24,
+      categories: ["cljxp4rbs000103oc6nhfn8b8"],
+      imageKey: "Cbc5apECJi6fH0IL_kNJV.jpeg",
+      active: true,
+    },
+    {
+      id: "cljzfn5p30004031nkcwlztit",
+      createdAt: "2023-07-12T08:01:41.271Z",
+      updatedAt: "2023-07-12T08:01:41.271Z",
+      name: "Burger",
+      price: 28,
+      categories: ["cljxp4rby000203ocr5e26bue"],
+      imageKey: "37D3o6MW79nfl-xllhmbS.jpeg",
+      active: true,
+    },
+    {
+      id: "cljzfu6gi0005031nq534vg0u",
+      createdAt: "2023-07-12T08:07:08.827Z",
+      updatedAt: "2023-07-12T08:07:08.827Z",
+      name: "Chicken Katsu",
+      price: 23,
+      categories: ["cljxp4rbs000103oc6nhfn8b8", "cljxp4rby000203ocr5e26bue"],
+      imageKey: "6RvbMeMxFP5ZxrToIKJCD.jpeg",
+      active: true,
+    },
+    {
+      id: "cljzfwwc30006031n55i1tgvw",
+      createdAt: "2023-07-12T08:09:15.685Z",
+      updatedAt: "2023-07-12T08:09:15.685Z",
+      name: "Coke Zero",
+      price: 4,
+      categories: ["cljxp4rbz000303ocbekbjevg"],
+      imageKey: "jP0yMgOkIHFy_U87SZE6Y.avif",
+      active: true,
+    },
+  ];
+
+  await Promise.all(
+    menus.map(async (menu) => {
+      await prisma.menuItem.create({
+        data: {
+          id: menu.id,
+          name: menu.name,
+          price: menu.price,
+          categories: menu.categories,
+          imageKey: menu.imageKey,
         },
       });
     })

@@ -12,7 +12,7 @@ export default function Home({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [popupOpen, setPopupOpen] = useState<string | null>(null);
   const [selectedTable, setSelectedTable] = useState<TableType | null>(null);
-  console.log(tables);
+
   return (
     <>
       <Head>
@@ -34,9 +34,10 @@ export default function Home({
               />
             </div>
           )}
+
           {tables &&
             tables
-              .sort()
+              .sort((a, b) => a.order - b.order)
               .map((table) => (
                 <Table
                   key={table.id}

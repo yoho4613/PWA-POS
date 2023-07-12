@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
@@ -58,8 +59,8 @@ const Navbar = () => {
           </div>
           <ul className="space-y-2 font-medium">
             <li>
-              <a
-                href="#"
+              <Link
+                href="/"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -72,8 +73,8 @@ const Navbar = () => {
                   <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                   <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                 </svg>
-                {opened && <span className="ml-3">Dashboard</span>}
-              </a>
+                {opened && <span className="ml-3">Home</span>}
+              </Link>
             </li>
             <li>
               <button
@@ -141,7 +142,7 @@ const Navbar = () => {
               </ul> */}
             </li>
             <li>
-              <a
+              <Link
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
@@ -164,10 +165,10 @@ const Navbar = () => {
                     </span>
                   </>
                 )}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
@@ -189,10 +190,10 @@ const Navbar = () => {
                     </span>
                   </>
                 )}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
@@ -212,11 +213,11 @@ const Navbar = () => {
                 {opened && (
                   <span className="flex-1 ml-3 whitespace-nowrap">Users</span>
                 )}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                href="/menu"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -234,10 +235,10 @@ const Navbar = () => {
                 </svg>
                 {opened && (
                   <span className="flex-1 ml-3 whitespace-nowrap">
-                    Products
+                    Menu
                   </span>
                 )}
-              </a>
+              </Link>
             </li>
             <li>
               <button

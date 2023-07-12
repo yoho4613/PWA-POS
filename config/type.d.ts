@@ -13,9 +13,22 @@ export interface TableType {
   capacity: number;
   location: string;
   isParticipated: false;
+  order: number;
 }
 
 export interface Categories {
   id: string;
   name: string;
+}
+
+export interface MenuItem {
+  id: string;
+  createdAt: DateTime;
+  updatedAt: DateTime;
+  name: string;
+  price: number;
+  categories: string[];
+  imageKey: string;
+  active: boolean;
+  url: string;
 }

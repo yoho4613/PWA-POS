@@ -22,12 +22,12 @@ model User {
 }
 
 model Table {
-  id             String   @id @default(cuid())
+  id             String  @id @default(cuid())
   name           String
   location       String
   capacity       Int
   isParticipated Boolean
-  createdAt      DateTime @default(now())
+  order          Int     @default(autoincrement())
 }
 
 model Cashup {
@@ -48,7 +48,6 @@ model MenuItem {
   categories String[]
   imageKey   String
   active     Boolean  @default(true)
-  Order      Order?
 }
 
 model Categories {
@@ -68,8 +67,7 @@ model Transaction {
 
 model Order {
   id            String       @id @unique @default(cuid())
-  item          MenuItem     @relation(fields: [itemId], references: [id])
-  itemId        String       @unique
+  menuItem      String
   quantity      Float
   Transaction   Transaction? @relation(fields: [transactionId], references: [id])
   transactionId Int?
