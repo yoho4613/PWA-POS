@@ -18,7 +18,7 @@ CREATE TABLE "Table" (
     "name" TEXT NOT NULL,
     "location" TEXT NOT NULL,
     "capacity" INTEGER NOT NULL,
-    "isParticipated" BOOLEAN NOT NULL,
+    "isParticipated" TEXT NOT NULL,
     "order" SERIAL NOT NULL,
 
     CONSTRAINT "Table_pkey" PRIMARY KEY ("id")

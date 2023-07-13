@@ -7,9 +7,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if(req.method === "GET") {
-
-
+  if (req.method === "GET") {
   }
   if (req.method === "POST") {
     const transactionSchema = z.object({
@@ -23,7 +21,7 @@ export default async function handler(
       people: Number(people),
       tableId,
     });
-    console.log(response);
+
     if (!response.success) {
       res.status(400).json("Type is Invalid");
     }
@@ -35,10 +33,11 @@ export default async function handler(
       },
     });
 
-    const updatedTable = await fetch(`${BASE_URL}/api/table/isParticipated`, {
+    await fetch(`${BASE_URL}/api/table/isParticipated`, {
       method: "POST",
       body: JSON.stringify({
         id: tableId,
+        transactionId: transaction.id,
       }),
     })
       .then((response) => {

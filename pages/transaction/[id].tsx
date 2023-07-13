@@ -2,7 +2,12 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Transaction/Navbar";
 import { BASE_URL } from "../constant/config";
-import { Categories, MenuItem, TransactionType } from "../../config/type";
+import {
+  Categories,
+  MenuItem,
+  Order,
+  TransactionType,
+} from "../../config/type";
 import Link from "next/link";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Searchbar from "../../components/Searchbar";
@@ -13,6 +18,7 @@ const Transaction = ({
   categories,
   menuItems,
   transaction,
+  orders,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const id = router.query.id;
@@ -23,10 +29,6 @@ const Transaction = ({
   const [cart, setCart] = useState<{ menuItem: MenuItem; quantity: number }[]>(
     []
   );
-
-  useEffect(() => {
-    console.log(cart);
-  }, [cart]);
   return (
     <div className="bg-[#002A53] w-screen  ">
       <div className="flex h-screen flex-col ">
@@ -84,7 +86,7 @@ const Transaction = ({
             </div>
           </div>
           <div className="h-full w-1/3">
-            <Cart cart={cart} setCart={setCart} transaction={transaction} />
+            <Cart orders={orders} cart={cart} setCart={setCart} transaction={transaction} />
           </div>
         </div>
       </div>
@@ -98,19 +100,23 @@ export const getServerSideProps: GetServerSideProps<{
   menuItems: MenuItem[];
   categories: Categories[];
   transaction: TransactionType;
+  orders: Order[];
 }> = async ({ query }) => {
-
   const result = await fetch(`${BASE_URL}/api/menu/menu`);
   const menuItems = await result.json();
   const result2 = await fetch(`${BASE_URL}/api/categories/categories`);
   const categories = await result2.json();
   const result3 = await fetch(`${BASE_URL}/api/transaction/${query.id}`);
   const transaction = await result3.json();
+  const result4 = await fetch(`${BASE_URL}/api/order/${query.id}`);
+  const orders = await result4.json();
+
   return {
     props: {
       menuItems,
       categories,
       transaction,
+      orders,
     },
   };
 };

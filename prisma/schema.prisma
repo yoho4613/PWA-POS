@@ -22,12 +22,12 @@ model User {
 }
 
 model Table {
-  id             String  @id @default(cuid())
+  id             String @id @default(cuid())
   name           String
   location       String
   capacity       Int
-  isParticipated Boolean
-  order          Int     @default(autoincrement())
+  isParticipated String
+  order          Int    @default(autoincrement())
 }
 
 model Cashup {

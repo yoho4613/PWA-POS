@@ -12,7 +12,7 @@ export interface TableType {
   name: string;
   capacity: number;
   location: string;
-  isParticipated: false;
+  isParticipated: string;
   order: number;
 }
 
@@ -48,6 +48,7 @@ export interface Order {
   id: string;
   menuItem: string;
   quantity: number;
+  price: number;
   transaction?: Transaction;
   transactionId?: number;
 }

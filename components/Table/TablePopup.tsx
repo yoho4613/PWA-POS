@@ -22,17 +22,6 @@ const TablePopup = ({ selectedTable, setPopupOpen }: TablePopupProps) => {
     document.addEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // const [form, setForm] = useState({ customerName: "", people: 0 });
-
-  // const handleSubmit = async () => {
-  //   const response = await fetch("/api/transaction/transaction", {
-  //     method: "POST",
-  //     body: JSON.stringify(form),
-  //   }).then((res) => {
-  //     setPopupOpen(false);
-  //     return res.json();
-  //   });
-  // };
 
   return (
     <div ref={popupRef}>

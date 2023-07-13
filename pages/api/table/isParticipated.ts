@@ -15,18 +15,22 @@ export default async function handler(
       res.status(400).json("Invalid Type");
     }
 
-    const { id } = JSON.parse(req.body);
+    const { id, transactionId } = JSON.parse(req.body);
 
     const table = await prisma.table.findUnique({
       where: { id },
     });
+
+    console.log(transactionId);
 
     const updatedTable = await prisma.table.update({
       where: {
         id,
       },
       data: {
-        isParticipated: table?.isParticipated ? false : true,
+        isParticipated: table?.isParticipated.length
+          ? ""
+          : String(transactionId),
       },
     });
 
