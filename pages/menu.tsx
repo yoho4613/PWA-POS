@@ -6,6 +6,7 @@ import { MultiValue } from "react-select";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
+import { useRouter } from "next/router";
 
 const DynamicSelect = dynamic(() => import("react-select"), { ssr: false });
 
@@ -33,6 +34,7 @@ const Menu = ({
   const [filter, setFilter] = useState<{ value: string; label: string }[] | []>(
     []
   );
+  const router = useRouter()
 
   useEffect(() => {
     if (!input.file) return;
@@ -111,6 +113,7 @@ const Menu = ({
     // Reset input
     setInput(initialInput);
     setPreview("");
+    router.replace(router.asPath);
 
     return result;
   };
@@ -123,10 +126,9 @@ const Menu = ({
   };
 
   return (
-    <div className="bg-[#002A53] w-screen min-h-screen flex ">
+    <div className="bg-[#002A53]  w-screen min-h-screen flex ">
       <Navbar />
-
-      <div className="p-6 grow">
+      <div className="p-6 grow h-screen overflow-auto">
         <div className="mx-auto flex max-w-xl flex-col gap-2">
           <input
             name="name"
@@ -192,6 +194,14 @@ const Menu = ({
             />
           </label>
 
+          <textarea
+            className="p-2.5 border-none bg-gray-200 rounded-sm"
+            name="description"
+            id="description"
+            rows={4}
+            placeholder="description"
+          ></textarea>
+
           <button
             className="h-12 rounded-sm bg-gray-200 disabled:cursor-not-allowed"
             disabled={!input.file || !input.name}
@@ -220,7 +230,7 @@ const Menu = ({
               }))}
             />
           </div>
-          <div className=" mb-12 mt-6 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-8 ">
+          <div className="mb-12 mt-6 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-8 ">
             {menuItems
               ?.filter((menuItem) =>
                 filter.length

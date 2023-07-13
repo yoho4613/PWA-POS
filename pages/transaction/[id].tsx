@@ -2,30 +2,34 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Transaction/Navbar";
 import { BASE_URL } from "../constant/config";
-import { Categories, MenuItem } from "../../config/type";
+import { Categories, MenuItem, TransactionType } from "../../config/type";
 import Link from "next/link";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Searchbar from "../../components/Searchbar";
-import Image from "next/image";
-import Cart from "../api/transaction/Cart";
+import Cart from "../../components/Transaction/Cart";
+import MenuPopup from "../../components/Transaction/MenuPopup";
 
 const Transaction = ({
   categories,
   menuItems,
+  transaction,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const id = router.query.id;
   const [selectedCategory, setSelectedCategory] = useState("Breakfast");
-  const [filter, setFilter] = useState("")
+  const [filter, setFilter] = useState("");
+  const [selectedMenu, setSelectedMenu] = useState<MenuItem | null>(null);
+  const [cartForm, setCartForm] = useState({ id: "", quantity: 1 });
+  const [cart, setCart] = useState<{ menuItem: MenuItem; quantity: number }[]>(
+    []
+  );
 
   useEffect(() => {
-    // fetch(`${BASE_URL}/api/categories/categories`)
-    //   .then((res) => res.json())
-    //   .then((res) => setCategories(res));
-  }, []);
+    console.log(cart);
+  }, [cart]);
   return (
-    <div className="bg-[#002A53] w-screen h-screen ">
-      <div>
+    <div className="bg-[#002A53] w-screen  ">
+      <div className="flex h-screen flex-col ">
         <div className="flex px-4 bg-gray-400">
           <div className="grow">
             <Navbar
@@ -47,21 +51,40 @@ const Transaction = ({
             </Link>
           </div>
         </div>
-        <div className="flex">
-          <div className="grow">
+        <div className="flex grow">
+          <div className="grow relative">
+            {selectedMenu && (
+              <MenuPopup
+                selectedMenu={selectedMenu}
+                setSelectedMenu={setSelectedMenu}
+                cartForm={cartForm}
+                setCartForm={setCartForm}
+                setCart={setCart}
+              />
+            )}
             <div>
               <Searchbar filter={filter} setFilter={setFilter} />
             </div>
-            <div className="flex flex-wrap">
-              {menuItems.filter((menuItem) => filter.length ? menuItem.name.toLowerCase().includes(filter) : menuItem).map((menuItem) => (
-                <div className="p-4 bg-gray-400 rounded-lg " key={menuItem.id}>
-                  <h2 className="text-white">{menuItem.name}</h2>
-                </div>
-              ))}
+            <div className="flex flex-wrap justify-evenly">
+              {menuItems
+                .filter((menuItem) =>
+                  filter.length
+                    ? menuItem.name.toLowerCase().includes(filter)
+                    : menuItem
+                )
+                .map((menuItem) => (
+                  <button
+                    className="p-4 w-48 h-20 bg-gray-100 font-bold hover:bg-gray-200 rounded-lg mb-6 "
+                    key={menuItem.id}
+                    onClick={() => setSelectedMenu(menuItem)}
+                  >
+                    {menuItem.name}
+                  </button>
+                ))}
             </div>
           </div>
-          <div>
-            <Cart />
+          <div className="h-full w-1/3">
+            <Cart cart={cart} setCart={setCart} transaction={transaction} />
           </div>
         </div>
       </div>
@@ -74,16 +97,20 @@ export default Transaction;
 export const getServerSideProps: GetServerSideProps<{
   menuItems: MenuItem[];
   categories: Categories[];
-}> = async () => {
+  transaction: TransactionType;
+}> = async ({ query }) => {
+
   const result = await fetch(`${BASE_URL}/api/menu/menu`);
   const menuItems = await result.json();
   const result2 = await fetch(`${BASE_URL}/api/categories/categories`);
   const categories = await result2.json();
-
+  const result3 = await fetch(`${BASE_URL}/api/transaction/${query.id}`);
+  const transaction = await result3.json();
   return {
     props: {
       menuItems,
       categories,
+      transaction,
     },
   };
 };

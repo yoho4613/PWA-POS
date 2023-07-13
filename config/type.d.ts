@@ -31,4 +31,28 @@ export interface MenuItem {
   imageKey: string;
   active: boolean;
   url: string;
+  description: string;
+}
+
+export interface TransactionType {
+  id: number;
+  customerName: string;
+  people: number;
+  payment: number;
+  subtotal: number;
+  paid: boolean;
+  order?: Order[];
+}
+
+export interface Order {
+  id: string;
+  menuItem: string;
+  quantity: number;
+  transaction?: Transaction;
+  transactionId?: number;
+}
+
+export interface Cart {
+  menuItem: MenuItem;
+  quantity: number;
 }

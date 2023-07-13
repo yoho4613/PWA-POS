@@ -40,14 +40,15 @@ model Cashup {
 }
 
 model MenuItem {
-  id         String   @id @unique @default(cuid())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  name       String
-  price      Float
-  categories String[]
-  imageKey   String
-  active     Boolean  @default(true)
+  id          String   @id @unique @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  price       Float
+  categories  String[]
+  imageKey    String
+  active      Boolean  @default(true)
+  description String   @default("")
 }
 
 model Categories {
@@ -69,6 +70,7 @@ model Order {
   id            String       @id @unique @default(cuid())
   menuItem      String
   quantity      Float
+  price         Float
   Transaction   Transaction? @relation(fields: [transactionId], references: [id])
   transactionId Int?
 }

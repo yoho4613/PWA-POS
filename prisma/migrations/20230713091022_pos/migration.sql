@@ -46,6 +46,7 @@ CREATE TABLE "MenuItem" (
     "categories" TEXT[],
     "imageKey" TEXT NOT NULL,
     "active" BOOLEAN NOT NULL DEFAULT true,
+    "description" TEXT NOT NULL DEFAULT '',
 
     CONSTRAINT "MenuItem_pkey" PRIMARY KEY ("id")
 );
@@ -75,6 +76,7 @@ CREATE TABLE "Order" (
     "id" TEXT NOT NULL,
     "menuItem" TEXT NOT NULL,
     "quantity" DOUBLE PRECISION NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
     "transactionId" INTEGER,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
