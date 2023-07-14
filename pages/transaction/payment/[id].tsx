@@ -19,14 +19,14 @@ const Payment = ({ query, transaction, orders }: PaymentProps) => {
         <div className="w-64">Navbar</div>
         <div className="grow">
           <div className="my-4">
-            <div>
+            <div className="border-blue-400 border-b-2 mb-2">
               <div className="flex justify-between">
                 <p className="font-bold w-1/3">Item</p>
                 <p className="font-bold w-1/3 text-center">Qty</p>
                 <p className="font-bold w-1/3 text-right">Price</p>
               </div>
               {orders.map((order) => (
-                <div className="flex  justify-between ">
+                <div key={order.id} className="flex  justify-between ">
                   <p className="w-1/3">{order.menuItem}</p>
                   <p className="w-1/3 text-center">{order.quantity}</p>
                   <p className="w-1/3 text-right">${order.price}</p>
@@ -34,16 +34,16 @@ const Payment = ({ query, transaction, orders }: PaymentProps) => {
               ))}
             </div>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between border-blue-400 border-b-2 mb-2">
             <h2>Upfront Payment:</h2>
             <p>${transaction.paid}</p>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between border-blue-400 border-b-2 mb-2">
             <h2>Remaining Balance:</h2>
             <p>${transaction.subtotal}</p>
           </div>
 
-          <div className="flex justify-between">
+          <div className="flex justify-between border-blue-400 border-b-2">
             <h2>Remaining Balance:</h2>
             <input type="number" className="text-right" value={payment} onChange={(e) => setPayment(Number(e.target.value))} />
           </div>

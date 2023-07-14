@@ -14,6 +14,11 @@ interface CartProps {
 const Cart = ({ cart, setCart, transaction, orders }: CartProps) => {
   const router = useRouter();
   const handleSave = async () => {
+    await fetchOrder(cart).catch((err) => console.log(err));
+    router.push("/");
+  };
+
+  const fetchOrder = async (cart: Cart[]) => {
     const cartItems = cart.map((c) => ({
       menuItem: c.menuItem.name,
       quantity: c.quantity,
@@ -27,12 +32,18 @@ const Cart = ({ cart, setCart, transaction, orders }: CartProps) => {
     })
       .then((res) => {
         setCart([]);
-        router.push('/')
         return res.json();
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handlePayNow = async () => {
+    if (cart.length) {
+      await fetchOrder(cart).catch((err) => console.log(err));
+    }
+    router.push(`/transaction/payment/${transaction.id}`);
   };
   return (
     <div className="bg-gray-200 h-full w-full text-center flex flex-col">
@@ -49,18 +60,20 @@ const Cart = ({ cart, setCart, transaction, orders }: CartProps) => {
         </ul>
 
         {orders &&
-          orders.map((o) => (
-            <ul
-              key={o.id}
-              className="flex border-b-2 bg-gray-50 px-2 py-4 justify-between opacity-60"
-            >
-              <li className="font-bold w-1/3 text-left">{o.menuItem}</li>
-              <li className="w-1/3">{o.quantity}</li>
-              <li className="w-1/3 text-right">
-                {Number(o.quantity) * Number(o.price)}
-              </li>
-            </ul>
-          ))}
+          orders
+            .sort((a, b) => a.createdAt - b.createdAt)
+            .map((o) => (
+              <ul
+                key={o.id}
+                className="flex border-b-2 bg-gray-50 px-2 py-4 justify-between opacity-60"
+              >
+                <li className="font-bold w-1/3 text-left">{o.menuItem}</li>
+                <li className="w-1/3">{o.quantity}</li>
+                <li className="w-1/3 text-right">
+                  {Number(o.quantity) * Number(o.price)}
+                </li>
+              </ul>
+            ))}
         <div className=" border-b-8 border-neutral-600"></div>
         {cart &&
           cart.map((c, i) => (
@@ -78,12 +91,12 @@ const Cart = ({ cart, setCart, transaction, orders }: CartProps) => {
       </div>
 
       <div className="bg-gray-50 py-4">
-        <Link
-          href={`/transaction/payment/${transaction.id}`}
+        <button
+          onClick={handlePayNow}
           className="focus:outline-none w-1/3 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
         >
           Pay Now
-        </Link>
+        </button>
         <button
           type="button"
           onClick={handleSave}

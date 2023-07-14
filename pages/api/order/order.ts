@@ -55,7 +55,7 @@ export default async function handler(
           transactionId: number;
           price: number;
         }
-      ) => (acc += curr.price * curr.quantity),
+      ) => (acc += curr.price),
       0
     );
     await prisma.transaction

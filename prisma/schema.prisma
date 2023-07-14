@@ -74,6 +74,7 @@ model Order {
   price         Float
   Transaction   Transaction? @relation(fields: [transactionId], references: [id])
   transactionId Int?
+  createdAt     DateTime     @default(now())
 }
 
 model Payment {

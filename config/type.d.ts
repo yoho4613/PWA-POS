@@ -51,6 +51,7 @@ export interface Order {
   price: number;
   transaction?: Transaction;
   transactionId?: number;
+  createdAt: DateTime;
 }
 
 export interface Cart {
