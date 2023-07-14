@@ -1,5 +1,4 @@
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Navbar from "../../components/Transaction/Navbar";
 import { BASE_URL } from "../constant/config";
 import {
@@ -14,21 +13,28 @@ import Searchbar from "../../components/Searchbar";
 import Cart from "../../components/Transaction/Cart";
 import MenuPopup from "../../components/Transaction/MenuPopup";
 
+export interface SelectedCategory {
+  label: string;
+  value: string;
+}
+
 const Transaction = ({
   categories,
   menuItems,
   transaction,
   orders,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const router = useRouter();
-  const id = router.query.id;
-  const [selectedCategory, setSelectedCategory] = useState("Breakfast");
+  const [selectedCategory, setSelectedCategory] = useState<SelectedCategory>({
+    label: "all",
+    value: "",
+  });
   const [filter, setFilter] = useState("");
   const [selectedMenu, setSelectedMenu] = useState<MenuItem | null>(null);
   const [cartForm, setCartForm] = useState({ id: "", quantity: 1 });
   const [cart, setCart] = useState<{ menuItem: MenuItem; quantity: number }[]>(
     []
   );
+
   return (
     <div className="bg-[#002A53] w-screen  ">
       <div className="flex h-screen flex-col ">
@@ -72,7 +78,12 @@ const Transaction = ({
                 .filter((menuItem) =>
                   filter.length
                     ? menuItem.name.toLowerCase().includes(filter)
-                    : menuItem
+                    : true
+                )
+                .filter((menuItem) =>
+                  selectedCategory.value.length
+                    ? menuItem.categories.includes(selectedCategory.value)
+                    : true
                 )
                 .map((menuItem) => (
                   <button
@@ -86,7 +97,12 @@ const Transaction = ({
             </div>
           </div>
           <div className="h-full w-1/3">
-            <Cart orders={orders} cart={cart} setCart={setCart} transaction={transaction} />
+            <Cart
+              orders={orders}
+              cart={cart}
+              setCart={setCart}
+              transaction={transaction}
+            />
           </div>
         </div>
       </div>

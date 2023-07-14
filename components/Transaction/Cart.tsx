@@ -2,6 +2,7 @@ import React from "react";
 import { Cart, Order, TransactionType } from "../../config/type";
 import { BASE_URL } from "../../pages/constant/config";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface CartProps {
   cart: Cart[];
@@ -77,12 +78,12 @@ const Cart = ({ cart, setCart, transaction, orders }: CartProps) => {
       </div>
 
       <div className="bg-gray-50 py-4">
-        <button
-          type="button"
+        <Link
+          href={`/transaction/payment/${transaction.id}`}
           className="focus:outline-none w-1/3 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
         >
           Pay Now
-        </button>
+        </Link>
         <button
           type="button"
           onClick={handleSave}

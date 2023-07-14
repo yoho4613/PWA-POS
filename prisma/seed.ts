@@ -154,13 +154,19 @@ async function main() {
     )
   );
 
-  const categories = ["Breakfast", "Lunch", "Dinner", "Drink"];
+  const categories = [
+    { name: "Breakfast", id: "cljxp4rbs000003ocntutxfqy" },
+    { name: "Lunch", id: "cljxp4rbs000103oc6nhfn8b8" },
+   {name: "Dinner", id: "cljxp4rby000203ocr5e26bue"},
+    {name: "Drink", id: "cljzfwwc30006031n55i1tgvw"},
+  ];
 
   await Promise.all(
     categories.map(async (category) => {
       await prisma.categories.create({
         data: {
-          name: category,
+          id: category.id,
+          name: category.name,
         },
       });
     })
@@ -176,7 +182,7 @@ async function main() {
       categories: ["cljxp4rbs000003ocntutxfqy", "cljxp4rbs000103oc6nhfn8b8"],
       imageKey: "oQBKMNUdH_wv-TSFW43Tt.jpeg",
       active: true,
-      description: "Mushroom, Scrambled Eggs, Baked Bean, Bread, Bacon"
+      description: "Mushroom, Scrambled Eggs, Baked Bean, Bread, Bacon",
     },
     {
       id: "cljzfm7q00003031nmwawl0ev",
@@ -187,7 +193,7 @@ async function main() {
       categories: ["cljxp4rbs000103oc6nhfn8b8"],
       imageKey: "Cbc5apECJi6fH0IL_kNJV.jpeg",
       active: true,
-      description: "Korean food. with eggs, soft tofu, vegetables"
+      description: "Korean food. with eggs, soft tofu, vegetables",
     },
     {
       id: "cljzfn5p30004031nkcwlztit",
@@ -198,7 +204,7 @@ async function main() {
       categories: ["cljxp4rby000203ocr5e26bue"],
       imageKey: "37D3o6MW79nfl-xllhmbS.jpeg",
       active: true,
-      description: "Big hand made burger with eggs, pork patty and vegetables"
+      description: "Big hand made burger with eggs, pork patty and vegetables",
     },
     {
       id: "cljzfu6gi0005031nq534vg0u",
@@ -209,7 +215,7 @@ async function main() {
       categories: ["cljxp4rbs000103oc6nhfn8b8", "cljxp4rby000203ocr5e26bue"],
       imageKey: "6RvbMeMxFP5ZxrToIKJCD.jpeg",
       active: true,
-      description: "Chicken Katsu with special sause"
+      description: "Chicken Katsu with special sause",
     },
     {
       id: "cljzfwwc30006031n55i1tgvw",
@@ -220,7 +226,7 @@ async function main() {
       categories: ["cljxp4rbz000303ocbekbjevg"],
       imageKey: "jP0yMgOkIHFy_U87SZE6Y.avif",
       active: true,
-      description: "Coke Zero (No sugar)"
+      description: "Coke Zero (No sugar)",
     },
   ];
 
@@ -233,7 +239,7 @@ async function main() {
           price: menu.price,
           categories: menu.categories,
           imageKey: menu.imageKey,
-          description: menu.description
+          description: menu.description,
         },
       });
     })

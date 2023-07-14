@@ -19,7 +19,7 @@ export default async function handler(
     const response = orderSchema.safeParse(JSON.parse(req.body));
     const cart = JSON.parse(req.body);
 
-    console.log(cart)
+    console.log(cart);
 
     if (!response.success) {
       console.log(response);
@@ -42,10 +42,32 @@ export default async function handler(
               price: order.price,
             },
           });
-          console.log(result);
         }
       )
     ).catch((err) => res.status(400).json(err));
+
+    const subtotal = cart.reduce(
+      (
+        acc: number,
+        curr: {
+          menuItem: string;
+          quantity: number;
+          transactionId: number;
+          price: number;
+        }
+      ) => (acc += curr.price * curr.quantity),
+      0
+    );
+    await prisma.transaction
+      .update({
+        where: {
+          id: cart[0].transactionId,
+        },
+        data: {
+          subtotal,
+        },
+      })
+      .catch((err) => res.status(400).json(err));
 
     res.status(200).json({ success: true });
   }
