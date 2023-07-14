@@ -57,13 +57,14 @@ model Categories {
 }
 
 model Transaction {
-  id           Int     @id @unique @default(autoincrement())
+  id           Int       @id @unique @default(autoincrement())
   customerName String
   people       Float
-  payment      Int     @default(0)
-  subtotal     Int     @default(0)
-  paid         Boolean @default(false)
+  payment      Payment[]
+  subtotal     Int       @default(0)
+  paid         Int       @default(0)
   order        Order[]
+  closed       Boolean   @default(false)
 }
 
 model Order {
@@ -71,6 +72,15 @@ model Order {
   menuItem      String
   quantity      Float
   price         Float
+  Transaction   Transaction? @relation(fields: [transactionId], references: [id])
+  transactionId Int?
+}
+
+model Payment {
+  id            String       @id @unique @default(cuid())
+  method        String
+  amount        Int
+  createdAt     DateTime     @default(now())
   Transaction   Transaction? @relation(fields: [transactionId], references: [id])
   transactionId Int?
 }

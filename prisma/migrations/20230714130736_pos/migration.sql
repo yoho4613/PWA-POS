@@ -64,9 +64,9 @@ CREATE TABLE "Transaction" (
     "id" SERIAL NOT NULL,
     "customerName" TEXT NOT NULL,
     "people" DOUBLE PRECISION NOT NULL,
-    "payment" INTEGER NOT NULL DEFAULT 0,
     "subtotal" INTEGER NOT NULL DEFAULT 0,
-    "paid" BOOLEAN NOT NULL DEFAULT false,
+    "paid" INTEGER NOT NULL DEFAULT 0,
+    "closed" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Transaction_pkey" PRIMARY KEY ("id")
 );
@@ -80,6 +80,17 @@ CREATE TABLE "Order" (
     "transactionId" INTEGER,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Payment" (
+    "id" TEXT NOT NULL,
+    "method" TEXT NOT NULL,
+    "amount" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "transactionId" INTEGER,
+
+    CONSTRAINT "Payment_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -97,5 +108,11 @@ CREATE UNIQUE INDEX "Transaction_id_key" ON "Transaction"("id");
 -- CreateIndex
 CREATE UNIQUE INDEX "Order_id_key" ON "Order"("id");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Payment_id_key" ON "Payment"("id");
+
 -- AddForeignKey
 ALTER TABLE "Order" ADD CONSTRAINT "Order_transactionId_fkey" FOREIGN KEY ("transactionId") REFERENCES "Transaction"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Payment" ADD CONSTRAINT "Payment_transactionId_fkey" FOREIGN KEY ("transactionId") REFERENCES "Transaction"("id") ON DELETE SET NULL ON UPDATE CASCADE;
