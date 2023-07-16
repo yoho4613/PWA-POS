@@ -67,6 +67,7 @@ CREATE TABLE "Transaction" (
     "subtotal" INTEGER NOT NULL DEFAULT 0,
     "paid" INTEGER NOT NULL DEFAULT 0,
     "closed" BOOLEAN NOT NULL DEFAULT false,
+    "table" TEXT NOT NULL,
 
     CONSTRAINT "Transaction_pkey" PRIMARY KEY ("id")
 );

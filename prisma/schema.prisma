@@ -65,6 +65,7 @@ model Transaction {
   paid         Int       @default(0)
   order        Order[]
   closed       Boolean   @default(false)
+  table        String
 }
 
 model Order {

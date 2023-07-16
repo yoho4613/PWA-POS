@@ -39,11 +39,11 @@ export default async function handler(
       },
     });
 
-    if(transaction.subtotal <= transaction.paid) {
+    if (transaction.subtotal <= transaction.paid) {
       await fetch(`${BASE_URL}/table/isParticipated`, {
         method: "POST",
-        body: ""
-      })
+        body: transaction.table,
+      });
     }
 
     res.status(200).json(transaction);

@@ -52,6 +52,7 @@ export interface Order {
   transaction?: Transaction;
   transactionId?: number;
   createdAt: DateTime;
+  table: string;
 }
 
 export interface Cart {
