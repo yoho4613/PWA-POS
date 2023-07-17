@@ -62,12 +62,15 @@ CREATE TABLE "Categories" (
 -- CreateTable
 CREATE TABLE "Transaction" (
     "id" SERIAL NOT NULL,
-    "customerName" TEXT NOT NULL,
+    "customerName" TEXT NOT NULL DEFAULT 'customer',
     "people" DOUBLE PRECISION NOT NULL,
     "subtotal" INTEGER NOT NULL DEFAULT 0,
     "paid" INTEGER NOT NULL DEFAULT 0,
     "closed" BOOLEAN NOT NULL DEFAULT false,
     "table" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "closedAt" TIMESTAMP(3),
 
     CONSTRAINT "Transaction_pkey" PRIMARY KEY ("id")
 );

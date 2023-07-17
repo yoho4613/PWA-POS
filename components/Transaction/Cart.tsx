@@ -2,7 +2,6 @@ import React from "react";
 import { Cart, Order, TransactionType } from "../../config/type";
 import { BASE_URL } from "../../pages/constant/config";
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 interface CartProps {
   cart: Cart[];

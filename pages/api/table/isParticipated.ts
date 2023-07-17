@@ -21,8 +21,6 @@ export default async function handler(
       where: { id },
     });
 
-    console.log(transactionId);
-
     const updatedTable = await prisma.table.update({
       where: {
         id,

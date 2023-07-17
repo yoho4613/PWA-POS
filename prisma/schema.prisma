@@ -58,14 +58,16 @@ model Categories {
 
 model Transaction {
   id           Int       @id @unique @default(autoincrement())
-  customerName String
+  customerName String    @default("customer")
   people       Float
   payment      Payment[]
   subtotal     Int       @default(0)
   paid         Int       @default(0)
   order        Order[]
-  closed       Boolean   @default(false)
   table        String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  closedAt     DateTime?
 }
 
 model Order {

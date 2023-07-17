@@ -36,13 +36,14 @@ export default async function handler(
         paid: {
           increment: payment.amount,
         },
+        closedAt: new Date(),
       },
     });
 
     if (transaction.subtotal <= transaction.paid) {
-      await fetch(`${BASE_URL}/table/isParticipated`, {
+      await fetch(`${BASE_URL}/api/table/isParticipated`, {
         method: "POST",
-        body: transaction.table,
+        body: JSON.stringify({ id: transaction.table }),
       });
     }
 

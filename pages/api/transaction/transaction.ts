@@ -8,6 +8,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
+    const transactions = await prisma.transaction.findMany();
+
+    res.status(200).json(transactions);
   }
   if (req.method === "POST") {
     const transactionSchema = z.object({

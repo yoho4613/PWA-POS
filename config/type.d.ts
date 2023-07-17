@@ -40,8 +40,11 @@ export interface TransactionType {
   people: number;
   payment: number;
   subtotal: number;
-  paid: boolean;
+  paid: number;
   order?: Order[];
+  createdAt: DateTime;
+  updatedAt: DateTime;
+  closedAt?: DateTime;
 }
 
 export interface Order {
