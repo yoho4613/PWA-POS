@@ -70,7 +70,7 @@ const Cart = ({ cart, setCart, transaction, orders }: CartProps) => {
                 <li className="font-bold w-1/3 text-left">{o.menuItem}</li>
                 <li className="w-1/3">{o.quantity}</li>
                 <li className="w-1/3 text-right">
-                  {Number(o.quantity) * Number(o.price)}
+                  ${Number(o.price)}
                 </li>
               </ul>
             ))}

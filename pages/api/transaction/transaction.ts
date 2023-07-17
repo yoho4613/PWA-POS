@@ -30,6 +30,7 @@ export default async function handler(
       data: {
         customerName,
         people: Number(people),
+        table: tableId,
       },
     });
 

@@ -64,7 +64,9 @@ export default async function handler(
           id: cart[0].transactionId,
         },
         data: {
-          subtotal,
+          subtotal: {
+            increment: subtotal,
+          },
         },
       })
       .catch((err) => res.status(400).json(err));
