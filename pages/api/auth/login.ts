@@ -19,17 +19,24 @@ export default async function handler(
   });
 
   if (req.method === "POST") {
-    const response = loginSchema.safeParse(req.body);
-
+    const response = loginSchema.safeParse(JSON.parse(req.body));
     if (!response.success) {
-      return res.status(400).json(response.error);
+      return res.status(400).json(response.error.message);
     }
 
-    const { email, password } = req.body;
+    const { email, password }: { email: string; password: string } = JSON.parse(
+      req.body
+    );
 
-    const user = await prisma.user.findUnique({
-      where: { email: email },
+    const user = await prisma.user.findFirst({
+      where: {
+        email,
+      },
     });
+
+    if (user === null) {
+      return res.status(401).json({ message: "User Does not exist", status: 401 });
+    }
 
     const passwordMatch = await bcrypt.compare(
       password,
@@ -37,7 +44,7 @@ export default async function handler(
     );
 
     if (!user || !passwordMatch || !email || !password) {
-      throw new Error("Invalid Email or Password");
+      return res.status(401).json("Invalid Email or Password");
     }
 
     const token = await new SignJWT({})
@@ -65,9 +72,6 @@ export default async function handler(
         lastLogin: new Date(),
       },
     });
-    res.redirect(307, "/");
-    return { success: true };
+    return res.status(200).json({ success: true });
   }
-
-  
 }

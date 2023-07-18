@@ -29,7 +29,7 @@ const Table = ({
     <button
       type="button"
       onClick={openTableDetail}
-      className={`flex justify-center items-center rounded-md w-24 h-24 sm:w-36 sm:h-36 md:w-44 ${
+      className={`flex justify-center items-center rounded-md w-28 h-16 sm:w-32 sm:h-24 md:w-44 ${
         table.isParticipated.length
           ? "bg-blue-400 text-gray-50"
           : "bg-[#f1f1f1]"

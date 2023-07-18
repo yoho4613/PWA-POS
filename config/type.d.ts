@@ -57,6 +57,7 @@ export interface Cart {
 export interface User {
   id: string;
   name: string;
+  password: string;
   email: string;
   createdAt: DateTime;
   lastLogin: DateTime;

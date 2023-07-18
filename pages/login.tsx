@@ -1,7 +1,36 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+import { BASE_URL } from "./constant/config";
+import { useRouter } from "next/router";
 
 const login = () => {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+  const [warning, setWarning] = useState<string | null>(null);
+  const router = useRouter()
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!form.email || !form.password) {
+      setWarning("Please fill the form correctly");
+    } else {
+      await fetch(`${BASE_URL}/api/auth/login`, {
+        method: "POST",
+        body: JSON.stringify(form),
+      }).then((res) => {
+        if(!res.ok) {
+          console.log(res)
+          throw res.statusText
+        } else {
+          return res.json()
+        }
+      }).catch((err) => {
+        setWarning("Something went wrong");
+      }).then(res => router.push('/'))
+    }
+  };
   return (
     <section className="w-screen min-h-screen gradient-form bg-neutral-200 dark:bg-neutral-700">
       <div className="container m-auto h-full p-10">
@@ -24,9 +53,8 @@ const login = () => {
                       </h4>
                     </div>
 
-                    <form method="POST" action="/api/auth/login">
-                      <p className="mb-4">Please login to your account</p>
-
+                    <p className="mb-4">Please login to your account</p>
+                    <form onSubmit={(e) =>handleSubmit(e)}>
                       <div
                         className="relative mb-4 z-0"
                         data-te-input-wrapper-init
@@ -37,6 +65,10 @@ const login = () => {
                           name="email"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder=" "
+                          value={form.email}
+                          onChange={(e) =>
+                            setForm({ ...form, email: e.target.value })
+                          }
                         />
                         <label
                           htmlFor="email"
@@ -55,6 +87,10 @@ const login = () => {
                           name="password"
                           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                           placeholder=" "
+                          value={form.password}
+                          onChange={(e) =>
+                            setForm({ ...form, password: e.target.value })
+                          }
                         />
                         <label
                           htmlFor="password"
@@ -62,6 +98,7 @@ const login = () => {
                         >
                           Password
                         </label>
+                        {warning && <p className="text-red-500">{warning}</p>}
                       </div>
 
                       <div className="mb-12 pb-1 pt-1 text-center">
@@ -77,22 +114,21 @@ const login = () => {
                         >
                           Log in
                         </button>
-
                         <a href="#!">Forgot password?</a>
                       </div>
-
-                      <div className="flex items-center justify-between pb-6">
-                        <p className="mb-0 mr-2">Don&apos;t have an account?</p>
-                        <button
-                          type="submit"
-                          className="inline-block rounded border-2 border-danger px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
-                          data-te-ripple-init
-                          data-te-ripple-color="light"
-                        >
-                          Register
-                        </button>
-                      </div>
                     </form>
+
+                    <div className="flex items-center justify-between pb-6">
+                      <p className="mb-0 mr-2">Don&apos;t have an account?</p>
+                      <button
+                        type="submit"
+                        className="inline-block rounded border-2 border-danger px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
+                        data-te-ripple-init
+                        data-te-ripple-color="light"
+                      >
+                        Register
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div
