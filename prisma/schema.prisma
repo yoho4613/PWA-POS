@@ -11,14 +11,14 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        String        @id @default(uuid())
   name      String
-  email     String   @unique
+  email     String        @unique
   password  String
-  role      String   @default("staff")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  lastLogin DateTime @default(now())
+  role      RoleEnumType? @default(staff)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  lastLogin DateTime      @default(now())
 }
 
 model Table {
@@ -87,4 +87,11 @@ model Payment {
   createdAt     DateTime     @default(now())
   Transaction   Transaction? @relation(fields: [transactionId], references: [id])
   transactionId Int?
+}
+
+enum RoleEnumType {
+  staff
+  manager
+  admin
+  superadmin
 }

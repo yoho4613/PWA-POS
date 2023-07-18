@@ -1,12 +1,3 @@
-export interface User {
-  name: string;
-  email: string;
-  password: string;
-  role: string;
-  createdAt: DateTime;
-  updatedAt: DateTime;
-}
-
 export interface TableType {
   id: string;
   name: string;
@@ -61,4 +52,15 @@ export interface Order {
 export interface Cart {
   menuItem: MenuItem;
   quantity: number;
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: DateTime;
+  lastLogin: DateTime;
+  role: string;
+  createdAt: DateTime;
+  updatedAt: DateTime;
 }
