@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { useState } from "react";
-import { BASE_URL } from "./constant/config";
+import { BASE_URL } from "../constant/config";
 import { useRouter } from "next/router";
 
 const login = () => {

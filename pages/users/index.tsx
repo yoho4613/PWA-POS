@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../../components/Navbar";
-import { BASE_URL } from "../constant/config";
+import { BASE_URL } from "../../constant/config";
 import { GetServerSideProps } from "next";
 import { RoleEnumType } from "@prisma/client";
 import { User } from "../../config/type";

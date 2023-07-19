@@ -14,7 +14,7 @@ export default async function handler(
     });
 
     if (!fileTypeSchema.safeParse(JSON.parse(req.body)).success) {
-      res.status(400).json("Invalid Type");
+      return res.status(400).json("Invalid Type");
     }
 
     const { fileType } = JSON.parse(req.body);
@@ -42,7 +42,7 @@ export default async function handler(
       );
     })) as any as { url: string; fields: string[] };
 
-    res.status(200).json({ url, fields, key });
+    return res.status(200).json({ url, fields, key });
   }
 
   if (req.method === "DELETE") {

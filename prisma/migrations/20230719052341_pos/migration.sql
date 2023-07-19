@@ -1,10 +1,28 @@
+-- CreateEnum
+CREATE TYPE "RoleEnumType" AS ENUM ('staff', 'manager', 'admin', 'superadmin');
+
+-- CreateTable
+CREATE TABLE "Shop" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "address" TEXT NOT NULL,
+    "contact" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "logoKey" TEXT NOT NULL,
+    "tax" TEXT NOT NULL,
+    "cashBalance" INTEGER NOT NULL,
+    "description" TEXT NOT NULL,
+
+    CONSTRAINT "Shop_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "role" TEXT NOT NULL DEFAULT 'staff',
+    "role" "RoleEnumType" DEFAULT 'staff',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "lastLogin" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -66,7 +84,6 @@ CREATE TABLE "Transaction" (
     "people" DOUBLE PRECISION NOT NULL,
     "subtotal" INTEGER NOT NULL DEFAULT 0,
     "paid" INTEGER NOT NULL DEFAULT 0,
-    "closed" BOOLEAN NOT NULL DEFAULT false,
     "table" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

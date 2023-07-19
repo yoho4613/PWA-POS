@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Navbar from "../components/Navbar";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { BASE_URL } from "./constant/config";
+import { BASE_URL } from "../constant/config";
 import Table from "../components/Table/Table";
 import { TableType } from "../config/type";
 import { useState } from "react";

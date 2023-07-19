@@ -13,6 +13,21 @@ interface Table {
 const prisma = new PrismaClient();
 
 async function main() {
+  const shop = {
+    name: "FC Restaurant",
+    address:     "145 Nelson Street, Auckland",
+    contact:     "021-087-35461",
+    email:       "yoho4613@gmail.com",
+    logoKey: "123124123",
+    tax : "123-123-123",
+    cashBalance: 200,
+    description: "FC Restaurant is best asian restaurant in New Zealand."
+  }
+
+  await prisma.shop.create({
+    data: shop
+  })
+
   const users = [
     {
       name: "jiho",

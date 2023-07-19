@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
-import { BASE_URL } from "../../pages/constant/config";
+import { BASE_URL } from "../../constant/config";
 import { TableType } from "../../config/type";
 
 interface TablePopupProps {

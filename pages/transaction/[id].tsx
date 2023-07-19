@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../../components/Transaction/Navbar";
-import { BASE_URL } from "../constant/config";
+import { BASE_URL } from "../../constant/config";
 import {
   Categories,
   MenuItem,

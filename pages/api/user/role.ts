@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../db";
 import { z } from "zod";
-import { BASE_URL } from "../../constant/config";
+import { BASE_URL } from "../../../constant/config";
 
 export default async function handler(
   req: NextApiRequest,

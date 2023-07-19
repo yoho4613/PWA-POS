@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
-import { BASE_URL } from "../constant/config";
+import { BASE_URL } from "../../constant/config";
 import { TransactionType } from "../../config/type";
 import { GetServerSideProps } from "next";
 import Searchbar from "../../components/Searchbar";
@@ -69,7 +69,7 @@ const index = ({ transactions }: HistoryProps) => {
       <Navbar />
       <div className="relative w-full overflow-x-auto shadow-md sm:rounded-lg">
         <div className=" mt-6">
-          <h1 className="text-white text-center text-xl">
+        <h1 className="text-white text-2xl text-center my-4">
             Transaction History
           </h1>
           <div className="flex items-center flex-wrap">

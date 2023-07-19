@@ -45,7 +45,7 @@ export default async function handler(
     res.status(200).json(menuItem);
   }
 
-  if (req.method === "DELETED") {
+  if (req.method === "DELETE") {
     const imageSchema = z.object({
       id: z.string(),
       imageKey: z.string(),
@@ -54,7 +54,7 @@ export default async function handler(
     if (!imageSchema.safeParse(JSON.parse(req.body)).success) {
       res.status(400).json("Invalid Type");
     }
-    const { id, imageKey } = req.body;
+    const { id, imageKey } = JSON.parse(req.body);
     await s3
       .deleteObject({ Bucket: "restaurant-booking-app", Key: imageKey })
       .promise();

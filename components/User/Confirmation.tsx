@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { User } from "../../config/type";
-import { BASE_URL } from "../../pages/constant/config";
+import { BASE_URL } from "../../constant/config";
 import { toast } from "react-hot-toast";
 
 const Confirmation = ({

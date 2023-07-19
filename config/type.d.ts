@@ -65,3 +65,16 @@ export interface User {
   createdAt: DateTime;
   updatedAt: DateTime;
 }
+
+export interface Shop {
+  id: string;
+  name: string;
+  address: string;
+  contact: string;
+  email: string;
+  logoKey: string;
+  tax: string;
+  cashBalance: number;
+  description: string;
+  url: string;
+}

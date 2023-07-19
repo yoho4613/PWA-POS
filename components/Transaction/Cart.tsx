@@ -1,6 +1,6 @@
 import React from "react";
 import { Cart, Order, TransactionType } from "../../config/type";
-import { BASE_URL } from "../../pages/constant/config";
+import { BASE_URL } from "../../constant/config";
 import { useRouter } from "next/router";
 
 interface CartProps {

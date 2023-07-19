@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
-import { BASE_URL } from "../../constant/config";
+import { BASE_URL } from "../../../constant/config";
 import { Order, TransactionType } from "../../../config/type";
 import Link from "next/link";
 import { useRouter } from "next/router";

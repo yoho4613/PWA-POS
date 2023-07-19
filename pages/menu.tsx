@@ -1,6 +1,6 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import React, { useEffect, useState } from "react";
-import { BASE_URL, MAX_FILE_SIZE } from "./constant/config";
+import { BASE_URL, MAX_FILE_SIZE } from "../constant/config";
 import { Categories, MenuItem } from "../config/type";
 import { MultiValue } from "react-select";
 import dynamic from "next/dynamic";
@@ -46,8 +46,6 @@ const Menu = ({
     // clean up the preview
     return () => URL.revokeObjectURL(objectUrl);
   }, [input.file]);
-
-  useEffect(() => {}, [menuItems, filter]);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.[0]) return setError("No File Selected");
