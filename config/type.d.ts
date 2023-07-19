@@ -78,3 +78,12 @@ export interface Shop {
   description: string;
   url: string;
 }
+
+export interface CashUp {
+  id: string;
+  cash: number;
+  card: number;
+  other: number;
+  startedAt: DateTime;
+  createdAt: DateTime;
+}

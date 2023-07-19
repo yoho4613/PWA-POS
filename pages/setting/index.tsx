@@ -47,10 +47,6 @@ const index = ({ shop }: { shop: Shop }) => {
   };
 
   useEffect(() => {
-    console.log(input);
-  }, [input]);
-
-  useEffect(() => {
     setInput(initialInput);
   }, []);
 
