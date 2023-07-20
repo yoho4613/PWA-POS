@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import { MenuItem } from "../config/type";
+import { faker } from "@faker-js/faker";
 
 interface Table {
   id: string;
@@ -15,18 +15,18 @@ const prisma = new PrismaClient();
 async function main() {
   const shop = {
     name: "FC Restaurant",
-    address:     "145 Nelson Street, Auckland",
-    contact:     "021-087-35461",
-    email:       "yoho4613@gmail.com",
+    address: "145 Nelson Street, Auckland",
+    contact: "021-087-35461",
+    email: "yoho4613@gmail.com",
     logoKey: "123124123",
-    tax : "123-123-123",
+    tax: "123-123-123",
     cashBalance: 200,
-    description: "FC Restaurant is best asian restaurant in New Zealand."
-  }
+    description: "FC Restaurant is best asian restaurant in New Zealand.",
+  };
 
   await prisma.shop.create({
-    data: shop
-  })
+    data: shop,
+  });
 
   const users = [
     {
@@ -172,8 +172,8 @@ async function main() {
   const categories = [
     { name: "Breakfast", id: "cljxp4rbs000003ocntutxfqy" },
     { name: "Lunch", id: "cljxp4rbs000103oc6nhfn8b8" },
-   {name: "Dinner", id: "cljxp4rby000203ocr5e26bue"},
-    {name: "Drink", id: "cljzfwwc30006031n55i1tgvw"},
+    { name: "Dinner", id: "cljxp4rby000203ocr5e26bue" },
+    { name: "Drink", id: "cljzfwwc30006031n55i1tgvw" },
   ];
 
   await Promise.all(
@@ -256,6 +256,26 @@ async function main() {
           imageKey: menu.imageKey,
           description: menu.description,
         },
+      });
+    })
+  );
+
+  const cashups = [];
+
+  const now = new Date();
+  for (let i = 1; i < 60; i++) {
+    cashups.push({
+      cash: faker.number.int({ min: 50, max: 250 }),
+      card: faker.number.int({ min: 500, max: 2500 }),
+      other: faker.number.int({ min: 0, max: 100 }),
+      createdAt: new Date(now.getTime() - 1000 * 60 * 60 * 24 * i),
+      closedAt: new Date(now.getTime() - 1000 * 60 * 60 * 24 * (i - 1)),
+    });
+  }
+  await Promise.all(
+    cashups.map(async (cashup) => {
+      await prisma.cashup.create({
+        data: cashup,
       });
     })
   );

@@ -48,8 +48,8 @@ CREATE TABLE "Cashup" (
     "cash" INTEGER NOT NULL,
     "card" INTEGER NOT NULL,
     "other" INTEGER NOT NULL,
-    "startedAt" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "closedAt" TIMESTAMP(3),
 
     CONSTRAINT "Cashup_pkey" PRIMARY KEY ("id")
 );

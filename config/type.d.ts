@@ -84,6 +84,6 @@ export interface CashUp {
   cash: number;
   card: number;
   other: number;
-  startedAt: DateTime;
   createdAt: DateTime;
+  closedAt: DateTime;
 }
