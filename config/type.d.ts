@@ -87,3 +87,11 @@ export interface CashUp {
   createdAt: DateTime;
   closedAt: DateTime;
 }
+
+export interface Payment {
+  id: string;
+  method: string;
+  amount: number;
+  createdAt: DateTime;
+  transactionId: number;
+}

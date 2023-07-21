@@ -263,15 +263,25 @@ async function main() {
   const cashups = [];
 
   const now = new Date();
-  for (let i = 1; i < 60; i++) {
-    cashups.push({
-      cash: faker.number.int({ min: 50, max: 250 }),
-      card: faker.number.int({ min: 500, max: 2500 }),
-      other: faker.number.int({ min: 0, max: 100 }),
-      createdAt: new Date(now.getTime() - 1000 * 60 * 60 * 24 * i),
-      closedAt: new Date(now.getTime() - 1000 * 60 * 60 * 24 * (i - 1)),
-    });
+  for (let i = 1; i <= 60; i++) {
+    if (i === 1) {
+      cashups.push({
+        cash: 0,
+        card: 0,
+        other: 0,
+        createdAt: new Date(now.getTime() - 1000 * 60 * 60 * 24 * 1),
+      });
+    } else {
+      cashups.push({
+        cash: faker.number.int({ min: 50, max: 250 }),
+        card: faker.number.int({ min: 500, max: 2500 }),
+        other: faker.number.int({ min: 0, max: 100 }),
+        createdAt: new Date(now.getTime() - 1000 * 60 * 60 * 24 * i),
+        closedAt: new Date(now.getTime() - 1000 * 60 * 60 * 24 * (i - 1)),
+      });
+    }
   }
+
   await Promise.all(
     cashups.map(async (cashup) => {
       await prisma.cashup.create({

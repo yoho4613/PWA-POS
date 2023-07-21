@@ -8,7 +8,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    console.log(req.body);
+
     const paymentSchema = z.object({
       amount: z.number(),
       method: z.string(),

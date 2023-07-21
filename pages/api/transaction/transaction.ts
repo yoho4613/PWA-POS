@@ -29,11 +29,15 @@ export default async function handler(
       res.status(400).json("Type is Invalid");
     }
 
+    const result = await fetch(`${BASE_URL}/api/cashup/currentCashup`);
+    const currentCashup = await result.json();
+
     const transaction = await prisma.transaction.create({
       data: {
         customerName,
         people: Number(people),
         table: tableId,
+        cashupId: currentCashup.id,
       },
     });
 
@@ -44,7 +48,7 @@ export default async function handler(
         transactionId: transaction.id,
       }),
     })
-      .then((response) => {
+      .then(() => {
         res.redirect(307, `/transaction/${transaction.id}`);
       })
       .catch((err) => res.status(400).json(err));

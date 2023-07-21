@@ -17,7 +17,7 @@ const index = ({ cashups }: CashUpProps) => {
       <div className="grow h-full overflow-auto">
         <h1 className="text-white text-2xl text-center my-4">Cash Up</h1>
         <div >
-          <div className="my-8">
+          <div className="">
             <CashupForm />
           </div>
           <div className="relative overflow-x-auto">
