@@ -19,7 +19,7 @@ type Input = {
   url: string;
 };
 
-const index = ({ shop }: { shop: Shop }) => {
+const SettingPage = ({ shop }: { shop: Shop }) => {
   const initialInput = {
     id: shop.id,
     name: shop.name,
@@ -323,7 +323,7 @@ const index = ({ shop }: { shop: Shop }) => {
   );
 };
 
-export default index;
+export default SettingPage;
 
 export const getServerSideProps: GetServerSideProps<{
   shop: Shop;

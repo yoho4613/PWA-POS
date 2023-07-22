@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import { BASE_URL } from "../constant/config";
 import { useRouter } from "next/router";
 
-const login = () => {
+const Login = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
   const [warning, setWarning] = useState<string | null>(null);
-  const router = useRouter()
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,16 +19,19 @@ const login = () => {
       await fetch(`${BASE_URL}/api/auth/login`, {
         method: "POST",
         body: JSON.stringify(form),
-      }).then((res) => {
-        if(!res.ok) {
-          console.log(res)
-          throw res.statusText
-        } else {
-          return res.json()
-        }
-      }).catch((err) => {
-        setWarning("Something went wrong");
-      }).then(res => router.push('/'))
+      })
+        .then((res) => {
+          if (!res.ok) {
+            console.log(res);
+            throw res.statusText;
+          } else {
+            return res.json();
+          }
+        })
+        .catch((err) => {
+          setWarning("Something went wrong");
+        })
+        .then((res) => router.push("/"));
     }
   };
   return (
@@ -54,7 +57,7 @@ const login = () => {
                     </div>
 
                     <p className="mb-4">Please login to your account</p>
-                    <form onSubmit={(e) =>handleSubmit(e)}>
+                    <form onSubmit={(e) => handleSubmit(e)}>
                       <div
                         className="relative mb-4 z-0"
                         data-te-input-wrapper-init
@@ -142,11 +145,15 @@ const login = () => {
                     <h4 className="mb-6 text-xl font-semibold">
                       We are more than just a company
                     </h4>
-                    <p className="text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    <p className="text-sm mb-6">
+                      At FC-POS, we are revolutionizing the way restaurants
+                      manage their operations and enhance the dining experience.
+                      Our state-of-the-art POS system is designed to streamline
+                      your restaurant&apos;s daily activities, from order management
+                      and table service to inventory control and reporting.
+                      Whether you run a bustling fine dining establishment, a
+                      cozy cafe, or a trendy food truck, our POS solution is
+                      tailored to meet the unique needs of your business.
                     </p>
                   </div>
                 </div>
@@ -159,4 +166,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

@@ -10,7 +10,7 @@ interface HistoryProps {
   transactions: TransactionType[];
 }
 
-const index = ({ transactions }: HistoryProps) => {
+const HistoryPage = ({ transactions }: HistoryProps) => {
   const [filter, setFilter] = useState("");
   const [category, setCategory] = useState<string | null>(null);
   const [filteredTransactions, setFilteredTransactions] = useState<
@@ -188,7 +188,7 @@ const index = ({ transactions }: HistoryProps) => {
   );
 };
 
-export default index;
+export default HistoryPage;
 
 export const getServerSideProps: GetServerSideProps<{
   transactions: TransactionType[];

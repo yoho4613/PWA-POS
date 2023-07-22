@@ -22,7 +22,7 @@ const initialInput = {
   role: "",
 };
 
-const index = ({ users }: { users: User[] }) => {
+const UserPage = ({ users }: { users: User[] }) => {
   const [input, setInput] = useState<Input>(initialInput);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [popup, setPopup] = useState<"edit" | "delete" | null>(null);
@@ -200,7 +200,7 @@ const index = ({ users }: { users: User[] }) => {
   );
 };
 
-export default index;
+export default UserPage;
 
 export const getServerSideProps: GetServerSideProps<{
   users: User[];
