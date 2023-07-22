@@ -10,18 +10,19 @@ interface CashUpProps {
 }
 
 const index = ({ cashups }: CashUpProps) => {
-
   return (
     <div className="flex bg-[#002A53] w-screen h-screen ">
       <Navbar />
       <div className="grow h-full overflow-auto">
         <h1 className="text-white text-2xl text-center my-4">Cash Up</h1>
-        <div >
+        <div>
           <div className="">
             <CashupForm />
           </div>
           <div className="relative overflow-x-auto">
-            <h2 className="text-white text-xl text-center my-4">Recent Cash Up</h2>
+            <h2 className="text-white text-xl text-center my-4">
+              Recent Cash Up
+            </h2>
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -50,22 +51,33 @@ const index = ({ cashups }: CashUpProps) => {
               </thead>
               <tbody>
                 {cashups &&
-                  cashups.map((cashup) => (
-                    <tr key={cashup.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  cashups
+                    .sort(
+                      (a, b) =>
+                        new Date(b.createdAt).getTime() -
+                        new Date(a.createdAt).getTime()
+                    )
+                    .map((cashup) => (
+                      <tr
+                        key={cashup.id}
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                       >
-                        {cashup.id.slice(0, 6)}...
-                      </th>
-                      <td className="px-6 py-4">${cashup.card}</td>
-                      <td className="px-6 py-4">${cashup.cash}</td>
-                      <td className="px-6 py-4">${cashup.other}</td>
-                      <td className="px-6 py-4 font-bold">${cashup.card + cashup.cash + cashup.other}</td>
-                      <td className="px-6 py-4">{cashup.createdAt}</td>
-                      <td className="px-6 py-4">{cashup.closedAt}</td>
-                    </tr>
-                  ))}
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {cashup.id.slice(0, 6)}...
+                        </th>
+                        <td className="px-6 py-4">${cashup.card}</td>
+                        <td className="px-6 py-4">${cashup.cash}</td>
+                        <td className="px-6 py-4">${cashup.other}</td>
+                        <td className="px-6 py-4 font-bold">
+                          ${cashup.card + cashup.cash + cashup.other}
+                        </td>
+                        <td className="px-6 py-4">{cashup.createdAt}</td>
+                        <td className="px-6 py-4">{cashup.closedAt}</td>
+                      </tr>
+                    ))}
               </tbody>
             </table>
           </div>

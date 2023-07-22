@@ -7,8 +7,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "POST") {
+  if (req.method === "GET") {
+    const payments = await prisma.payment.findMany();
 
+    return res.status(200).json(payments);
+  }
+  if (req.method === "POST") {
     const paymentSchema = z.object({
       amount: z.number(),
       method: z.string(),

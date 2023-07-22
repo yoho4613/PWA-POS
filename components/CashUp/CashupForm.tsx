@@ -46,7 +46,7 @@ const CashupForm = () => {
   });
   const [cardSubtotal, setCardSubtotal] = useState(0);
   const [otherInput, setOtherInput] = useState<number>(0);
-  const [step, setStep] = useState(5);
+  const [step, setStep] = useState(0);
 
   useEffect(() => {
     fetch(`${BASE_URL}/api/payment/withCurrentCashup`)
