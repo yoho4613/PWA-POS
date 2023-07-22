@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { BASE_URL } from "../constant/config";
 import { useRouter } from "next/router";
+import mainLogo from '../public/assets/logo.jpg'
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -46,7 +47,7 @@ const Login = () => {
                     <div className="text-center">
                       <Image
                         className="mx-auto w-48 rounded-md"
-                        src="/assets/logo.jpg"
+                        src={mainLogo}
                         alt="logo"
                         width={100}
                         height={100}
