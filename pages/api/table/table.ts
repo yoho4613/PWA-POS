@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const tables = await prisma.table.findMany();
-
+    
     res.status(200).json(tables);
   }
 }

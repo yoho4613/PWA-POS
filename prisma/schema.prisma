@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
 
@@ -39,7 +39,7 @@ model Table {
   location       String
   capacity       Int
   isParticipated String
-  order          Int    @default(autoincrement())
+  order          Int @unique @default(sequence())
 }
 
 model Cashup {
@@ -70,7 +70,7 @@ model Categories {
 }
 
 model Transaction {
-  id           Int       @id @unique @default(autoincrement())
+  id           Int    @id @unique @default(sequence())
   customerName String    @default("customer")
   people       Float
   payment      Payment[]
