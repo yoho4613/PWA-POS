@@ -10,79 +10,77 @@ import {
   isTuesday,
   isWednesday,
 } from "date-fns";
-import { MenuItem, Payment } from "../../config/type";
+import { Payment } from "../../config/type";
 
 Chart.register(...registerables);
 
-interface SaleChartProps {
-  // payments: Payment[];
-  data: MenuItem[];
+interface LineChartProps {
+  payments: Payment[] | [];
 }
 
-const SaleChart: FC<SaleChartProps> = ({ data }) => {
+const LineChart: FC<LineChartProps> = ({ payments }) => {
   // const [chart, setChart] = useState<Chart | null>(null);
   const [bookingData, setBookingData] = useState<number[] | []>([]);
-  const [preorderData, setPreorderData] = useState<number[] | []>([]);
 
   useEffect(() => {
-    if (data.length) {
+    if (payments.length) {
       const dataArray: number[] = [];
 
       for (let i = 0; i < 7; i++) {
         switch (i) {
           case 0:
             dataArray.push(
-              data.filter((menuItem) =>
-                isMonday(new Date(menuItem.createdAt))
-              ).length
+              payments
+                .filter((payment) => isMonday(new Date(payment.createdAt)))
+                .reduce((acc, curr) => (acc += curr.amount), 0)
             );
 
             break;
           case 1:
             dataArray.push(
-              data.filter((menuItem) =>
-                isTuesday(new Date(menuItem.createdAt))
-              ).length
+              payments
+                .filter((payment) => isTuesday(new Date(payment.createdAt)))
+                .reduce((acc, curr) => (acc += curr.amount), 0)
             );
 
             break;
           case 2:
             dataArray.push(
-              data.filter((menuItem) =>
-                isWednesday(new Date(menuItem.createdAt))
-              ).length
+              payments
+                .filter((payment) => isWednesday(new Date(payment.createdAt)))
+                .reduce((acc, curr) => (acc += curr.amount), 0)
             );
 
             break;
           case 3:
             dataArray.push(
-              data.filter((menuItem) =>
-                isThursday(new Date(menuItem.createdAt))
-              ).length
+              payments
+                .filter((payment) => isThursday(new Date(payment.createdAt)))
+                .reduce((acc, curr) => (acc += curr.amount), 0)
             );
 
             break;
           case 4:
             dataArray.push(
-              data.filter((menuItem) =>
-                isFriday(new Date(menuItem.createdAt))
-              ).length
+              payments
+                .filter((payment) => isFriday(new Date(payment.createdAt)))
+                .reduce((acc, curr) => (acc += curr.amount), 0)
             );
 
             break;
           case 5:
             dataArray.push(
-              data.filter((menuItem) =>
-                isSaturday(new Date(menuItem.createdAt))
-              ).length
+              payments
+                .filter((payment) => isSaturday(new Date(payment.createdAt)))
+                .reduce((acc, curr) => (acc += curr.amount), 0)
             );
 
             break;
           case 6:
             dataArray.push(
-              data.filter((menuItem) =>
-                isSunday(new Date(menuItem.createdAt))
-              ).length
+              payments
+                .filter((payment) => isSunday(new Date(payment.createdAt)))
+                .reduce((acc, curr) => (acc += curr.amount), 0)
             );
 
             break;
@@ -91,9 +89,10 @@ const SaleChart: FC<SaleChartProps> = ({ data }) => {
         }
       }
 
+      console.log(dataArray);
       setBookingData(dataArray);
     }
-  }, [data]);
+  }, [payments]);
 
   const chartRef = useRef<Chart | null>(null);
 
@@ -102,17 +101,31 @@ const SaleChart: FC<SaleChartProps> = ({ data }) => {
 
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
+
+    // const plugin = {
+    //   id: 'customCanvasBackgroundColor',
+    //   beforeDraw: (chart: Chart, args, options) => {
+    //     const {ctx} = chart;
+    //     ctx.save();
+    //     ctx.globalCompositeOperation = 'destination-over';
+    //     ctx.fillStyle = options.color || '#fff';
+    //     ctx.fillRect(0, 0, chart.width, chart.height);
+    //     ctx.restore();
+    //   }
+    // };
+
     if (ctx) {
       chartRef.current = new Chart(ctx, {
         type: "bar",
         data: {
           labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
           datasets: [
-            { data: bookingData, label: "payments" },
-            { data: preorderData, label: "With Preorder" },
+            { data: bookingData, label: "Amount" },
+            // { data: preorderData, label: "With Preorder" },
           ],
         },
-        options: { responsive: true },
+
+        options: { responsive: true, color: "#0a0a0a" },
       });
     }
   };
@@ -124,4 +137,4 @@ const SaleChart: FC<SaleChartProps> = ({ data }) => {
   );
 };
 
-export default SaleChart;
+export default LineChart;

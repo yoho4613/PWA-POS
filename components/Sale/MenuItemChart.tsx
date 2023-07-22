@@ -16,20 +16,10 @@ const MenuItemChart: FC<MenuItemChartProps> = ({ data }) => {
 
     const ctx = canvas.getContext("2d");
     if (ctx) {
-     
-      const menuItems = Array.from(new Set(data.map((el) => el.name)))
-
-      const dataSetsArray = menuItems.map((name) => data.filter(menu => menu.name === name).length)
-
-      function generateRandomColor(){
-        let maxVal = 0xFFFFFF; // 16777215
-        let randomNumber: string | number = Math.random() * maxVal; 
-        randomNumber = Math.floor(randomNumber);
-        randomNumber = randomNumber.toString(16);
-        let randColor = randomNumber.padStart(6, 0);   
-        return `#${randColor.toUpperCase()}`
-    }
-
+      const menuItems = Array.from(new Set(data.map((el) => el.name)));
+      const dataSetsArray = menuItems.map(
+        (name) => data.filter((menu) => menu.name === name).length
+      );
 
       // @ts-ignore
       chartRef.current = new Chart(ctx, {
@@ -39,23 +29,18 @@ const MenuItemChart: FC<MenuItemChartProps> = ({ data }) => {
           datasets: [
             {
               data: dataSetsArray,
-              borderColor: ["rgb(75, 192, 192 )"],
-              backgroundColor: menuItems.map((el) => generateRandomColor()),
-              borderWidth: 2,
-
             },
           ],
         },
 
         options: {
           responsive: true,
-          plugins: 
-          {
+          plugins: {
             legend: {
               labels: {
                 color: "#fff",
-              }
-            }
+              },
+            },
           },
         },
       });
@@ -67,7 +52,7 @@ const MenuItemChart: FC<MenuItemChartProps> = ({ data }) => {
   return (
     <>
       <div className="w-full h-full flex mx-auto my-auto">
-        <div className=" pt-0 rounded-xl w-full h-fit my-auto  shadow-xl pb-2">
+        <div className="h-full w-full">
           <canvas ref={canvasCallback}></canvas>
         </div>
       </div>

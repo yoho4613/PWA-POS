@@ -33,9 +33,6 @@ const PaymentChart: FC<PaymentChartProps> = ({ data }) => {
           datasets: [
             {
               data: dataSetsArray,
-              borderColor: ["rgb(75, 192, 192)", "rgb(255, 205, 86)"],
-              backgroundColor: ["rgb(75, 192, 192 )", "rgb(255, 205, 86)"],
-              borderWidth: 2,
               label: "$",
             },
           ],
@@ -61,7 +58,7 @@ const PaymentChart: FC<PaymentChartProps> = ({ data }) => {
   return (
     <>
       <div className="w-full h-full flex mx-auto my-auto">
-        <div className=" pt-0 rounded-xl w-full h-fit my-auto  shadow-xl pb-2">
+        <div className="h-full w-full">
           <canvas ref={canvasCallback}></canvas>
         </div>
       </div>
