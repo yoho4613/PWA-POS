@@ -18,7 +18,7 @@ async function main() {
     address: "145 Nelson Street, Auckland",
     contact: "021-087-35461",
     email: "yoho4613@gmail.com",
-    logoKey: "123124123",
+    logoKey: "cMUnknT4WSNZ5zgtMXmyn.jpeg",
     tax: "123-123-123",
     cashBalance: 200,
     description: "FC Restaurant is best asian restaurant in New Zealand.",

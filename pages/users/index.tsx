@@ -40,7 +40,6 @@ const UserPage = ({ users }: { users: User[] }) => {
         return res.json();
       })
       .then((res) => {
-        console.log(res);
         toast.success("User added successfully");
         setInput(initialInput);
       })
