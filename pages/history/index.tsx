@@ -19,7 +19,7 @@ const HistoryPage = ({ transactions }: HistoryProps) => {
 
   useEffect(() => {
     setFilteredTransactions(transactions);
-  }, []);
+  }, [transactions]);
 
   useEffect(() => {
     if (category) {
