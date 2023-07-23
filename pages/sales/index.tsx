@@ -33,15 +33,15 @@ const index = ({ menuItems, payments }: SalesProps) => {
         </div>
         <div className="w-full h-1/2 flex">
           <div className="h-full">
-            <PaymentChart data={payments} />
+            {payments && <PaymentChart data={payments} />}
           </div>
           <div className="h-full">
-            <MenuItemChart data={menuItems} />
+            {menuItems && <MenuItemChart data={menuItems} />}
           </div>
         </div>
         <div className="bg-gray-200">
           <h2 className="text-center font-bold">Profit</h2>
-          <LineChart payments={payments} />
+          {payments && <LineChart payments={payments} />}
         </div>
       </div>
     </div>
