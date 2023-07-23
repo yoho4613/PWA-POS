@@ -6,7 +6,7 @@
   "start_url": "/",
   "name": "PWA-POS(Point Of Sale)",
   "short_name": "PWA-POS",
-  "description": "A PWA with Next Js TypeScript for POS system",
+  "description": "NEXT.js PWA TypeScript for POS system",
   "icons": [
     {
       "src": "/icon-192x192.png",
