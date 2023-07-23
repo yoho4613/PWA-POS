@@ -9,6 +9,12 @@ const withPWA = require("next-pwa")({
 module.exports = withPWA({
   reactStrictMode: true,
   images: {
-    domains: ["pwa-pos.s3.ap-southeast-2.amazonaws.com"],
+    i18n: {
+      locales: ["en"],
+      defaultLocale: "en",
+    },
+    images: {
+      domains: ["pwa-pos.s3.ap-southeast-2.amazonaws.com"]
+    }
   },
 });
