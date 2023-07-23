@@ -58,18 +58,20 @@ export default async function handler(
       ) => (acc += curr.price),
       0
     );
-    await prisma.transaction
-      .update({
-        where: {
-          id: cart[0].transactionId,
-        },
-        data: {
-          subtotal: {
-            increment: subtotal,
+    if (cart.length) {
+      await prisma.transaction
+        .update({
+          where: {
+            id: cart[0].transactionId,
           },
-        },
-      })
-      .catch((err) => res.status(400).json(err));
+          data: {
+            subtotal: {
+              increment: subtotal,
+            },
+          },
+        })
+        .catch((err) => res.status(400).json(err));
+    }
 
     res.status(200).json({ success: true });
   }
