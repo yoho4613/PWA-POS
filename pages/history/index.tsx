@@ -22,38 +22,39 @@ const HistoryPage = ({ transactions }: HistoryProps) => {
   }, [transactions]);
 
   useEffect(() => {
-    if (category) {
-      switch (category) {
-        case "onTable":
-          setFilteredTransactions(
-            transactions.filter((t) => t.closedAt === null)
-          );
-          break;
-        case "day":
-          setFilteredTransactions(
-            transactions.filter((t) => isToday(new Date(t.createdAt)))
-          );
-          break;
-        case "week":
-          setFilteredTransactions(
-            transactions.filter((t) => isThisWeek(new Date(t.createdAt)))
-          );
-          break;
-        case "week":
-          setFilteredTransactions(
-            transactions.filter((t) => isThisMonth(new Date(t.createdAt)))
-          );
-          break;
-        default:
-          break;
+    if (transactions) {
+      if (category) {
+        switch (category) {
+          case "onTable":
+            setFilteredTransactions(
+              transactions.filter((t) => t.closedAt === null)
+            );
+            break;
+          case "day":
+            setFilteredTransactions(
+              transactions.filter((t) => isToday(new Date(t.createdAt)))
+            );
+            break;
+          case "week":
+            setFilteredTransactions(
+              transactions.filter((t) => isThisWeek(new Date(t.createdAt)))
+            );
+            break;
+          case "week":
+            setFilteredTransactions(
+              transactions.filter((t) => isThisMonth(new Date(t.createdAt)))
+            );
+            break;
+          default:
+            break;
+        }
+      } else if (category === null) {
+        setFilteredTransactions(transactions);
       }
-    } else if (category === null) {
-      setFilteredTransactions(transactions);
     }
   }, [transactions, filter, category]);
 
   useEffect(() => {
-
     setFilteredTransactions((prev) =>
       prev.filter(
         (t) =>
@@ -69,7 +70,7 @@ const HistoryPage = ({ transactions }: HistoryProps) => {
       <Navbar />
       <div className="relative w-full overflow-x-auto shadow-md sm:rounded-lg">
         <div className=" mt-6">
-        <h1 className="text-white text-2xl text-center my-4">
+          <h1 className="text-white text-2xl text-center my-4">
             Transaction History
           </h1>
           <div className="flex items-center flex-wrap">

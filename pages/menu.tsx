@@ -125,13 +125,13 @@ const Menu = ({
         id,
         imageKey,
       }),
-    })
+    });
     const response = await result.json();
-    if(response) {
-      router.replace(router.asPath)
-      toast.success(`${response.name} has been successfully deleted.`)
+    if (response) {
+      router.replace(router.asPath);
+      toast.success(`${response.name} has been successfully deleted.`);
     } else {
-      toast.error("Something went wrong!")
+      toast.error("Something went wrong!");
     }
   };
 
@@ -228,18 +228,20 @@ const Menu = ({
             <p className="text-lg text-white font-medium mr-2 mb-2">
               Your menu items:
             </p>
-            <DynamicSelect
-              value={filter}
-              onChange={(e) =>
-                setFilter(e as { value: string; label: string }[])
-              }
-              isMulti
-              className="h-12 grow"
-              options={categories.map((category) => ({
-                value: category.id,
-                label: category.name,
-              }))}
-            />
+            {categories && (
+              <DynamicSelect
+                value={filter}
+                onChange={(e) =>
+                  setFilter(e as { value: string; label: string }[])
+                }
+                isMulti
+                className="h-12 grow"
+                options={categories.map((category) => ({
+                  value: category.id,
+                  label: category.name,
+                }))}
+              />
+            )}
           </div>
           <div className="mb-12 mt-6 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-8 ">
             {menuItems &&
