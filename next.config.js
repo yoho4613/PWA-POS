@@ -14,7 +14,13 @@ module.exports = withPWA({
       defaultLocale: "en",
     },
     images: {
-      domains: ["pwa-pos.s3.ap-southeast-2.amazonaws.com"]
-    }
+      domains: ["pwa-pos.s3.ap-southeast-2.amazonaws.com"],
+    },
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.cdninstagram.com",
+      },
+    ],
   },
 });

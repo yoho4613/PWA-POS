@@ -16,8 +16,6 @@ export default async function handler(
       return res.status(400).json("There's no cashup opened");
     }
 
-    console.log(currentCashup)
-
     res.status(200).json(currentCashup);
   }
 }
