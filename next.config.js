@@ -19,7 +19,7 @@ module.exports = withPWA({
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**.cdninstagram.com",
+        hostname: "pwa-pos.s3.ap-southeast-2.amazonaws.com",
       },
     ],
   },
