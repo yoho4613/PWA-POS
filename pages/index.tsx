@@ -55,7 +55,6 @@ export default function Home({
 export const getServerSideProps: GetServerSideProps<{
   tables: TableType[];
 }> = async () => {
-  console.log(BASE_URL)
   const result = await fetch(`${BASE_URL}/api/table/table`);
   const tables = await result.json();
 

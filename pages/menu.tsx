@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import { useRouter } from "next/router";
+import { Toaster, toast } from "react-hot-toast";
 
 const DynamicSelect = dynamic(() => import("react-select"), { ssr: false });
 
@@ -34,7 +35,7 @@ const Menu = ({
   const [filter, setFilter] = useState<{ value: string; label: string }[] | []>(
     []
   );
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     if (!input.file) return;
@@ -117,16 +118,28 @@ const Menu = ({
   };
 
   const handleDelete = async (imageKey: string, id: string) => {
-    // await deleteMenuItem({ id, imageKey });
-    // refetch()
-    //   .then((res) => res)
-    //   .catch((err: Error) => console.log(err));
+    if (!imageKey || !id) return alert("Could not delete menu Item");
+    const result = await fetch(`${BASE_URL}/api/menu/menu`, {
+      method: "DELETE",
+      body: JSON.stringify({
+        id,
+        imageKey,
+      }),
+    })
+    const response = await result.json();
+    if(response) {
+      router.replace(router.asPath)
+      toast.success(`${response.name} has been successfully deleted.`)
+    } else {
+      toast.error("Something went wrong!")
+    }
   };
 
   return (
     <div className="bg-[#002A53]  w-screen min-h-screen flex ">
       <Navbar />
       <div className="p-6 grow h-screen overflow-auto">
+        <Toaster />
         <div className="mx-auto flex max-w-xl flex-col gap-2">
           <input
             name="name"
@@ -229,32 +242,33 @@ const Menu = ({
             />
           </div>
           <div className="mb-12 mt-6 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-8 ">
-            {menuItems
-              ?.filter((menuItem) =>
-                filter.length
-                  ? menuItem.categories.some((category) =>
-                      filter.map((f) => f.value).includes(category)
-                    )
-                  : menuItem
-              )
-              .map((menuItem: MenuItem) => (
-                <div key={menuItem.id}>
-                  <p className="text-white">{menuItem.name}</p>
-                  <div className="relative h-40 w-40 my-2">
-                    <Image priority fill alt="" src={menuItem.url} />
+            {menuItems &&
+              menuItems
+                .filter((menuItem) =>
+                  filter.length
+                    ? menuItem.categories.some((category) =>
+                        filter.map((f) => f.value).includes(category)
+                      )
+                    : menuItem
+                )
+                .map((menuItem: MenuItem) => (
+                  <div key={menuItem.id}>
+                    <p className="text-white">{menuItem.name}</p>
+                    <div className="relative h-40 w-40 my-2">
+                      <Image priority fill alt="" src={menuItem.url} />
+                    </div>
+                    <button
+                      onClick={() => {
+                        handleDelete(menuItem.imageKey, menuItem.id)
+                          .then((res) => res)
+                          .catch((err: Error) => console.log(err));
+                      }}
+                      className="text-sm text-red-400"
+                    >
+                      delete
+                    </button>
                   </div>
-                  <button
-                    onClick={() => {
-                      handleDelete(menuItem.imageKey, menuItem.id)
-                        .then((res) => res)
-                        .catch((err: Error) => console.log(err));
-                    }}
-                    className="text-sm text-red-400"
-                  >
-                    delete
-                  </button>
-                </div>
-              ))}
+                ))}
           </div>
         </div>
       </div>

@@ -59,6 +59,7 @@ export default async function handler(
       .deleteObject({ Bucket: "restaurant-booking-app", Key: imageKey })
       .promise();
     // Delete the image form db
+    
     const menuItem = await prisma.menuItem.delete({ where: { id } });
 
     res.status(200).json(menuItem);
