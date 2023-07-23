@@ -21,29 +21,31 @@ const MenuItemChart: FC<MenuItemChartProps> = ({ data }) => {
         (name) => data.filter((menu) => menu.name === name).length
       );
 
-      // @ts-ignore
-      chartRef.current = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: Array.from(new Set(data.map((d) => d.name))),
-          datasets: [
-            {
-              data: dataSetsArray,
-            },
-          ],
-        },
+      if (data) {
+        // @ts-ignore
+        chartRef.current = new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: Array.from(new Set(data.map((d) => d.name))),
+            datasets: [
+              {
+                data: dataSetsArray,
+              },
+            ],
+          },
 
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              labels: {
-                color: "#fff",
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                labels: {
+                  color: "#fff",
+                },
               },
             },
           },
-        },
-      });
+        });
+      }
     }
 
     return chartRef;

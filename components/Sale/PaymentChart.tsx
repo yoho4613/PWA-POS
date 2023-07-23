@@ -1,5 +1,5 @@
 import React, { FC, useRef } from "react";
-import {  Payment } from "../../config/type";
+import { Payment } from "../../config/type";
 import { Chart, registerables } from "chart.js";
 
 type PaymentChartProps = {
@@ -24,32 +24,31 @@ const PaymentChart: FC<PaymentChartProps> = ({ data }) => {
       const dataSetsArray = Array.from(new Set(data.map((e) => e.method))).map(
         (el) => calculateSum(data, el)
       );
-
-      // @ts-ignore
-      chartRef.current = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: Array.from(new Set(data.map((d) => d.method))),
-          datasets: [
-            {
-              data: dataSetsArray,
-              label: "$",
-            },
-          ],
-        },
-
-        options: {
-          responsive: true,
-          plugins: 
-          {
-            legend: {
-              labels: {
-                color: "#fff",
-              }
-            }
+      if (data) {
+        // @ts-ignore
+        chartRef.current = new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: Array.from(new Set(data.map((d) => d.method))),
+            datasets: [
+              {
+                data: dataSetsArray,
+                label: "$",
+              },
+            ],
           },
-        },
-      });
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                labels: {
+                  color: "#fff",
+                },
+              },
+            },
+          },
+        });
+      }
     }
 
     return chartRef;

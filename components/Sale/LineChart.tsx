@@ -102,17 +102,6 @@ const LineChart: FC<LineChartProps> = ({ payments }) => {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
-    // const plugin = {
-    //   id: 'customCanvasBackgroundColor',
-    //   beforeDraw: (chart: Chart, args, options) => {
-    //     const {ctx} = chart;
-    //     ctx.save();
-    //     ctx.globalCompositeOperation = 'destination-over';
-    //     ctx.fillStyle = options.color || '#fff';
-    //     ctx.fillRect(0, 0, chart.width, chart.height);
-    //     ctx.restore();
-    //   }
-    // };
 
     if (ctx) {
       chartRef.current = new Chart(ctx, {
