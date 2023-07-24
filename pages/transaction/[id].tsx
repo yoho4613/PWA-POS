@@ -38,7 +38,7 @@ const Transaction = ({
   return (
     <div className="bg-[#002A53] w-screen  ">
       <div className="flex h-screen flex-col ">
-        <div className="flex px-4 bg-gray-400">
+        <div className="flex w-full md:px-4 bg-gray-400">
           <div className="grow">
             <Navbar
               categories={categories}
@@ -49,7 +49,7 @@ const Transaction = ({
           <div className="flex items-center">
             <Link href="/">
               <svg
-                className="inline-block text-white h-12 bg-gray-500 w-16 p-2 hover:text-gray-700 rounded-lg hover:bg-gray-300 outline-0 border-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+                className="inline-block text-white h-8 md:h-12 bg-gray-500 w-8 md:w-16 p-2 hover:text-gray-700 rounded-lg hover:bg-gray-300 outline-0 border-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >
@@ -59,8 +59,8 @@ const Transaction = ({
             </Link>
           </div>
         </div>
-        <div className="flex grow">
-          <div className="grow relative">
+        <div className="flex w-full grow">
+          <div className="grow max-w-1/2 relative">
             {selectedMenu && (
               <MenuPopup
                 selectedMenu={selectedMenu}
@@ -70,9 +70,9 @@ const Transaction = ({
                 setCart={setCart}
               />
             )}
-            <div>
+
               <Searchbar filter={filter} setFilter={setFilter} />
-            </div>
+
             <div className="flex flex-wrap justify-evenly">
               {menuItems
                 .filter((menuItem) =>
@@ -87,7 +87,7 @@ const Transaction = ({
                 )
                 .map((menuItem) => (
                   <button
-                    className="p-4 w-48 h-20 bg-gray-100 font-bold hover:bg-gray-200 rounded-lg mb-6 "
+                    className=" p-1 w-16 h-auto text-sm sm:text-base  sm:p-2 md:p-4 sm:w-26 md:w-48 bg-gray-100 font-bold hover:bg-gray-200 rounded-lg mb-6 "
                     key={menuItem.id}
                     onClick={() => setSelectedMenu(menuItem)}
                   >
@@ -96,7 +96,7 @@ const Transaction = ({
                 ))}
             </div>
           </div>
-          <div className="h-full w-1/3">
+          <div className="h-full w-1/2 ">
             <Cart
               orders={orders}
               cart={cart}

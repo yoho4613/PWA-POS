@@ -44,7 +44,7 @@ const Payment = ({ query, transaction, orders }: PaymentProps) => {
   return (
     <div className="bg-[#002A53] w-screen min-h-screen flex flex-col justify-center items-center ">
       <div className="bg-gray-200 w-4/5 p-6 rounded-lg flex">
-        <div className="w-64">Navbar</div>
+        {/* <div className="w-64">Navbar</div> */}
         <div className="grow">
           <div className="my-4">
             <div className="border-blue-400 border-b-2 mb-2">
