@@ -26,7 +26,7 @@ export default async function handler(
         id,
       },
       data: {
-        isParticipated: table?.isParticipated.length
+        isParticipated: table?.isParticipated
           ? ""
           : String(transactionId),
       },
