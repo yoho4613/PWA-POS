@@ -38,7 +38,7 @@ model Table {
   name           String
   location       String
   capacity       Int
-  isParticipated String
+  isParticipated String?
   order          Int @unique @default(sequence())
 }
 
