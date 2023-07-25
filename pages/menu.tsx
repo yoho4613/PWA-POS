@@ -25,17 +25,27 @@ const initialInput = {
   file: undefined,
 };
 
-const Menu = ({
-  menuItems,
-  categories,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Menu = () => {
   const [input, setInput] = useState<Input>(initialInput);
   const [preview, setPreview] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [filter, setFilter] = useState<{ value: string; label: string }[] | []>(
     []
   );
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [categories, setCategories] = useState<Categories[]>([]);
   const router = useRouter();
+
+  useEffect(() => {
+    const result = fetch(`${BASE_URL}/api/menu/menu`)
+      .then((res) => res.json())
+      .then((res) => setMenuItems(res))
+      .catch((err) => new Error(err));
+    const result2 = fetch(`${BASE_URL}/api/categories/categories`)
+      .then((res) => res.json())
+      .then((res) => setCategories(res))
+      .catch((err) => new Error(err));
+  }, []);
 
   useEffect(() => {
     if (!input.file) return;
@@ -279,20 +289,3 @@ const Menu = ({
 };
 
 export default Menu;
-
-export const getServerSideProps: GetServerSideProps<{
-  menuItems: MenuItem[];
-  categories: Categories[];
-}> = async () => {
-  const result = await fetch(`${BASE_URL}/api/menu/menu`);
-  const menuItems = await result.json();
-  const result2 = await fetch(`${BASE_URL}/api/categories/categories`);
-  const categories = await result2.json();
-
-  return {
-    props: {
-      menuItems,
-      categories,
-    },
-  };
-};

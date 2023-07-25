@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import Image from "next/image";
 import { BASE_URL, MAX_FILE_SIZE } from "../../constant/config";
-import { GetServerSideProps } from "next";
 import { Shop } from "../../config/type";
 import { Toaster, toast } from "react-hot-toast";
 
@@ -19,24 +18,59 @@ type Input = {
   url: string;
 };
 
-const SettingPage = ({ shop }: { shop: Shop }) => {
+const SettingPage = () => {
   const initialInput = {
-    id: shop.id,
-    name: shop.name,
-    address: shop.address,
-    contact: shop.contact,
-    email: shop.email,
-    tax: shop.tax,
+    id: "",
+    name: "",
+    address: "",
+    contact: "",
+    email: "",
+    tax: "",
     file: undefined,
-    description: shop.description,
-    cashBalance: shop.cashBalance,
-    url: shop.url,
+    description: "",
+    cashBalance: 0,
+    url: "",
   };
+  const [shop, setShop] = useState<Input>({
+    id: "",
+    name: "",
+    address: "",
+    contact: "",
+    email: "",
+    tax: "",
+    file: undefined,
+    description: "",
+    cashBalance: 0,
+    url: "",
+  });
 
   const [input, setInput] = useState<Input>(initialInput);
   const [preview, setPreview] = useState<string>(shop.url || "");
   const [error, setError] = useState<string>("");
   const [warning, setWarning] = useState<string | null>(null);
+
+  useEffect(() => {
+    const result = fetch(`${BASE_URL}/api/shop/shop`)
+      .then((res) => res.json())
+      .then((res) => setShop(res))
+      .catch((err) => Error(err));
+  }, []);
+
+  useEffect(() => {
+    setInput({
+      id: shop.id,
+      name: shop.name,
+      address: shop.address,
+      contact: shop.contact,
+      email: shop.email,
+      tax: shop.tax,
+      file: undefined,
+      description: shop.description,
+      cashBalance: shop.cashBalance,
+      url: shop.url,
+    });
+    setPreview(shop.url)
+  }, [shop]);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.[0]) return setError("No File Selected");
@@ -130,7 +164,17 @@ const SettingPage = ({ shop }: { shop: Shop }) => {
       data.logoKey = key;
     }
 
-    console.log(data);
+    if (
+      !input.name ||
+      !input.address ||
+      !input.contact ||
+      !input.email ||
+      !input.tax ||
+      !input.cashBalance
+    ) {
+      setWarning("All field must filled.");
+      return;
+    }
 
     const result = await fetch(`${BASE_URL}/api/shop/shop`, {
       method: "PUT",
@@ -310,7 +354,9 @@ const SettingPage = ({ shop }: { shop: Shop }) => {
               setInput((prev) => ({ ...prev, description: e.target.value }))
             }
           ></textarea>
-
+          {warning && (
+            <p className="text-red-500">Something went wrong. {warning}.</p>
+          )}
           <button
             className="h-12 rounded-sm bg-gray-200 disabled:cursor-not-allowed"
             onClick={updateShopDetail}
@@ -324,16 +370,3 @@ const SettingPage = ({ shop }: { shop: Shop }) => {
 };
 
 export default SettingPage;
-
-export const getServerSideProps: GetServerSideProps<{
-  shop: Shop;
-}> = async () => {
-  const result = await fetch(`${BASE_URL}/api/shop/shop`);
-  const shop = await result.json();
-
-  return {
-    props: {
-      shop,
-    },
-  };
-};
