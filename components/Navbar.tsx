@@ -130,6 +130,25 @@ const Navbar = () => {
             </li>
             <li>
               <Link
+                href="/table"
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M2 7h20v3h-2l1 9h-2.5l-.56-5H6.06l-.56 5H3l1-9H2V7m15.5 3h-11l-.21 2h11.42l-.21-2z" />
+                </svg>
+                {opened && (
+                  <span className="flex-1 ml-3 whitespace-nowrap">Table</span>
+                )}
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="users"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
@@ -214,7 +233,9 @@ const Navbar = () => {
                 </svg>
                 {opened && (
                   <>
-                    <span className="flex-1 ml-3 whitespace-nowrap">Setting</span>
+                    <span className="flex-1 ml-3 whitespace-nowrap">
+                      Setting
+                    </span>
                   </>
                 )}
               </Link>

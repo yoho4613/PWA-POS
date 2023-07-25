@@ -9,5 +9,9 @@ export default async function handler(
     const tables = await prisma.table.findMany();
     
     res.status(200).json(tables);
+  } else if(req.method === "POST") {
+    
+  } else if(req.method === "PUT") {
+
   }
 }
