@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../../components/Navbar";
 import { BASE_URL } from "../../constant/config";
-import { GetServerSideProps } from "next";
 import { RoleEnumType } from "@prisma/client";
 import { User } from "../../config/type";
 import Confirmation from "../../components/User/Confirmation";
@@ -22,11 +21,19 @@ const initialInput = {
   role: "",
 };
 
-const UserPage = ({ users }: { users: User[] }) => {
+const UserPage = () => {
   const [input, setInput] = useState<Input>(initialInput);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [popup, setPopup] = useState<"edit" | "delete" | null>(null);
   const [warning, setWarning] = useState<string | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/api/user/user`)
+      .then((res) => res.json())
+      .then((res) => setUsers(res))
+      .catch((err) => new Error(err));
+  }, []);
 
   const addUser = async () => {
     const response = await fetch(`${BASE_URL}/api/user/user`, {
@@ -201,15 +208,3 @@ const UserPage = ({ users }: { users: User[] }) => {
 
 export default UserPage;
 
-export const getServerSideProps: GetServerSideProps<{
-  users: User[];
-}> = async () => {
-  const result = await fetch(`${BASE_URL}/api/user/user`);
-  const users = await result.json();
-
-  return {
-    props: {
-      users,
-    },
-  };
-};

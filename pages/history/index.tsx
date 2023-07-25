@@ -2,20 +2,23 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import { BASE_URL } from "../../constant/config";
 import { TransactionType } from "../../config/type";
-import { GetServerSideProps } from "next";
 import Searchbar from "../../components/Searchbar";
 import { isThisMonth, isThisWeek, isToday } from "date-fns";
 
-interface HistoryProps {
-  transactions: TransactionType[];
-}
-
-const HistoryPage = ({ transactions }: HistoryProps) => {
+const HistoryPage = () => {
   const [filter, setFilter] = useState("");
   const [category, setCategory] = useState<string | null>(null);
   const [filteredTransactions, setFilteredTransactions] = useState<
     TransactionType[]
   >([]);
+  const [transactions, setTransactions] = useState<TransactionType[]>([]);
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/api/transaction/transaction`)
+      .then((res) => res.json())
+      .then((res) => setTransactions(res))
+      .catch((err) => new Error(err));
+  }, []);
 
   useEffect(() => {
     if (transactions) {
@@ -60,7 +63,6 @@ const HistoryPage = ({ transactions }: HistoryProps) => {
     setFilteredTransactions((prev) =>
       prev.filter(
         (t) =>
-          // t.createdAt.incldues(filter) ||
           t.customerName.toLowerCase().includes(filter.toLowerCase()) ||
           t.id.toString().includes(filter.toLowerCase())
       )
@@ -192,16 +194,3 @@ const HistoryPage = ({ transactions }: HistoryProps) => {
 };
 
 export default HistoryPage;
-
-export const getServerSideProps: GetServerSideProps<{
-  transactions: TransactionType[];
-}> = async () => {
-  const result = await fetch(`${BASE_URL}/api/transaction/transaction`);
-  const transactions = await result.json();
-
-  return {
-    props: {
-      transactions,
-    },
-  };
-};

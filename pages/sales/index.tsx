@@ -1,20 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import { BASE_URL } from "../../constant/config";
 import { MenuItem, Payment } from "../../config/type";
-import { GetServerSideProps } from "next";
 import PaymentChart from "../../components/Sale/PaymentChart";
 import MenuItemChart from "../../components/Sale/MenuItemChart";
 import LineChart from "../../components/Sale/LineChart";
 
-interface SalesProps {
-  menuItems: MenuItem[];
-  payments: Payment[];
-}
+const Sales = () => {
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [payments, setPayments] = useState<Payment[]>([]);
 
-const index = ({ menuItems, payments }: SalesProps) => {
-  console.log(menuItems);
-  console.log(payments);
+  useEffect(() => {
+    fetch(`${BASE_URL}/api/menu/menu`)
+      .then((res) => res.json())
+      .then((res) => setMenuItems(res))
+      .catch((err) => new Error(err));
+
+    fetch(`${BASE_URL}/api/payment/payment`)
+      .then((res) => res.json())
+      .then((res) => setPayments(res))
+      .catch((err) => new Error(err));
+  }, []);
   return (
     <div className="bg-[#002A53] w-screen h-screen flex ">
       <Navbar />
@@ -48,21 +54,5 @@ const index = ({ menuItems, payments }: SalesProps) => {
   );
 };
 
-export default index;
+export default Sales;
 
-export const getServerSideProps: GetServerSideProps<{
-  menuItems: MenuItem[];
-  payments: Payment[];
-}> = async () => {
-  const result = await fetch(`${BASE_URL}/api/menu/menu`);
-  const menuItems = await result.json();
-  const result2 = await fetch(`${BASE_URL}/api/payment/payment`);
-  const payments = await result2.json();
-
-  return {
-    props: {
-      menuItems,
-      payments,
-    },
-  };
-};

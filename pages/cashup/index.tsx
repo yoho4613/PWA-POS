@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
-import { GetServerSideProps } from "next";
 import { CashUp } from "../../config/type";
 import { BASE_URL } from "../../constant/config";
 import CashupForm from "../../components/CashUp/CashupForm";
 
-interface CashUpProps {
-  cashups: CashUp[];
-}
-
-const index = ({ cashups }: CashUpProps) => {
+const Cashup = () => {
+const [cashups, setCashups] = useState<CashUp[]>([])
+useEffect(() => {
+ fetch(`${BASE_URL}/api/cashup/cashup`).then((res) => res.json()).then(res => setCashups(res)).catch((err) => new Error(err))
+}, [])
+  
   return (
     <div className="flex bg-[#002A53] w-screen h-screen ">
       <Navbar />
@@ -87,17 +87,5 @@ const index = ({ cashups }: CashUpProps) => {
   );
 };
 
-export default index;
+export default Cashup;
 
-export const getServerSideProps: GetServerSideProps<{
-  cashups: CashUp[];
-}> = async () => {
-  const result = await fetch(`${BASE_URL}/api/cashup/cashup`);
-  const cashups = await result.json();
-
-  return {
-    props: {
-      cashups,
-    },
-  };
-};

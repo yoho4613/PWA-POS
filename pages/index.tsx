@@ -1,17 +1,21 @@
 import Head from "next/head";
 import Navbar from "../components/Navbar";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { BASE_URL } from "../constant/config";
 import Table from "../components/Table/Table";
 import { TableType } from "../config/type";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TablePopup from "../components/Table/TablePopup";
 
-export default function Home({
-  tables,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Home() {
   const [popupOpen, setPopupOpen] = useState<string | null>(null);
   const [selectedTable, setSelectedTable] = useState<TableType | null>(null);
+  const [tables, setTables] = useState<TableType[]>([]);
+  useEffect(() => {
+    fetch(`${BASE_URL}/api/table/table`)
+      .then((res) => res.json())
+      .then((res) => setTables(res))
+      .catch((err) => new Error(err));
+  }, []);
 
   return (
     <>
@@ -51,16 +55,3 @@ export default function Home({
     </>
   );
 }
-
-export const getServerSideProps: GetServerSideProps<{
-  tables: TableType[];
-}> = async () => {
-  const result = await fetch(`${BASE_URL}/api/table/table`);
-  const tables = await result.json();
-
-  return {
-    props: {
-      tables,
-    },
-  };
-};
