@@ -1,16 +1,23 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Navbar = () => {
   const [opened, setOpened] = useState<boolean>(true);
-  const [dropdown, setDropdown] = useState<boolean>(false);
   const router = useRouter();
   const logout = async () => {
     await fetch("/api/auth/logout", {
       method: "POST",
     }).then(() => router.push("/login"));
   };
+
+  useEffect(() => {
+    if (window !== undefined) {
+      if (window.innerWidth <= 600) {
+        setOpened(false);
+      }
+    }
+  }, []);
 
   return (
     <div>
