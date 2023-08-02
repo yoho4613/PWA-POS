@@ -28,7 +28,7 @@ const MenuPopup = ({
       if (e.target instanceof HTMLElement) {
         if (popupRef.current && !popupRef.current.contains(e.target)) {
           setSelectedMenu(null);
-          setCartForm((prev) => ({...prev, quantity: 1}))
+          setCartForm((prev) => ({ ...prev, quantity: 1 }));
 
           document.removeEventListener("mousedown", handleClickOutside);
         }
@@ -43,7 +43,7 @@ const MenuPopup = ({
       { menuItem: selectedMenu, quantity: cartForm.quantity },
     ]);
     setSelectedMenu(null);
-    setCartForm((prev) => ({...prev, quantity: 1}))
+    setCartForm((prev) => ({ ...prev, quantity: 1 }));
   };
 
   return (
