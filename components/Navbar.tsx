@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 const Navbar = () => {
-  const [opened, setOpened] = useState<boolean>(true);
+  const [opened, setOpened] = useState<boolean>(false);
   const router = useRouter();
   const logout = async () => {
     await fetch("/api/auth/logout", {
@@ -13,8 +13,8 @@ const Navbar = () => {
 
   useEffect(() => {
     if (window !== undefined) {
-      if (window.innerWidth <= 600) {
-        setOpened(false);
+      if (window.innerWidth > 600) {
+        setOpened(true);
       }
     }
   }, []);

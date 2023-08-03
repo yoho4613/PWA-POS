@@ -33,7 +33,7 @@ const Table = ({
         table.isParticipated.length
           ? "bg-blue-400 text-gray-50"
           : "bg-[#f1f1f1]"
-      }  mx-6 p-4 text-center`}
+      } mx-2 sm:mx-6 mb-4 sm:mb-0 p-4 text-center`}
     >
       <h2 className="font-bold text-base sm:text-lg md:text-xl">
         {table.name}
