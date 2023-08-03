@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { BASE_URL } from "../constant/config";
 import { useRouter } from "next/router";
 import mainLogo from '../public/assets/logo.jpg'
+import Spinner from "../components/Spinner";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -11,12 +12,14 @@ const Login = () => {
   });
   const [warning, setWarning] = useState<string | null>(null);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!form.email || !form.password) {
       setWarning("Please fill the form correctly");
     } else {
+      setIsLoading(true)
       await fetch(`${BASE_URL}/api/auth/login`, {
         method: "POST",
         body: JSON.stringify(form),
@@ -31,12 +34,18 @@ const Login = () => {
         })
         .catch((err) => {
           setWarning("Something went wrong");
+          setIsLoading(false)
         })
         .then((res) => router.push("/"));
     }
   };
   return (
     <section className="w-screen min-h-screen gradient-form bg-neutral-200 dark:bg-neutral-700">
+        {isLoading && (
+          <div className="fixed flex justify-center z-10 items-center w-screen h-screen top-0 left-0" style={{backgroundColor: "rgba(0,0,0,0.4)"}}>
+            <Spinner />
+          </div>
+        )}
       <div className="container m-auto h-full p-10">
         <div className="g-6 flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200">
           <div className="w-full">
